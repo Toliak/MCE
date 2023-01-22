@@ -222,7 +222,8 @@ function getModuleShortcutsString() {
 function checkCommand() {
   local COMMAND="$1"
   if ! command -v "$COMMAND" 1>/dev/null 2>/dev/null; then
-    printf "checkCommand: Command \"\e[34m%s\e[0m\" \e[31mnot found\e[0m\n" "$COMMAND"
+    printf "checkCommand: Command \"\x1b[34m%s\x1b[0m\" \x1b[31mnot found\x1b[0m\n" \
+      "$COMMAND" >&2
     return 1
   fi
 
@@ -300,4 +301,28 @@ function reduceStringToSingleChar() {
   done
 
   printf "%s" "$RESULT"
+}
+
+# @stdout Detect OS
+# Available outputs:
+# - `debian`
+# - `arch`
+# - `unknown`
+function detectOs() {
+  if checkCommand "apt-get" 2&>/dev/null \
+      || checkCommand "apt" 2&>/dev/null
+  then
+    printf "debian"
+    return
+  fi
+  if checkCommand "pacman" 2&>/dev/null \
+      || checkCommand "pamac" 2&>/dev/null \
+      || checkCommand "yaourt" 2&>/dev/null \
+      || checkCommand "yay" 2&>/dev/null
+  then
+    printf "arch"
+    return
+  fi
+
+  printf "unknown"
 }

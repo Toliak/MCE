@@ -19,7 +19,7 @@ printf "Installation path: \x1b[1;4;34m%s\x1b[0m\n" "$INSTALL_PATH"
 checkCommand() {
   COMMAND="$1"
   if ! command -v "$COMMAND" 1>/dev/null 2>/dev/null; then
-    printf "checkCommand: Command \"\e[34m%s\e[0m\" \e[31mnot found\e[0m\n" "$COMMAND"
+    printf "checkCommand: Command \"\x1b[34m%s\x1b[0m\" \x1b[31mnot found\x1b[0m\n" "$COMMAND"
     return 1
   fi
   return 0

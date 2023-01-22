@@ -80,6 +80,8 @@ function mceMain() {
     printf "[%s] %s -- %s\n" "$SHORTCUT" "$MODULE_NAME" "$MODULE_DESC"
   done
 
+  # TODO(toliak): Ordering must be declared by the modules directories
+  INSTALL_RESULT="0"
   for (( I=0; I<"$STRING_LENGTH"; I++ )); do
     local SHORTCUT="${MODULE_IDS:$I:1}"
     local MODULE_ID
@@ -92,8 +94,17 @@ function mceMain() {
     fi
 
     printSeparator
+
+    local MODULE="${ALL_MODULES[$MODULE_ID]}"
     printf "Module [%s] \x1b[34m%s\x1b[0m\n" "$SHORTCUT" "$MODULE"
+    set +e
     installModule "$MODULE"
+    INSTALL_RESULT="$?"
+    set -e
+    if [ ! "$INSTALL_RESULT" = "0" ]; then
+      printf "Module [%s] \x1b[34m%s\x1b[0m installation failed\n" \
+        "$SHORTCUT" "$MODULE"
+    fi
   done
 
   printSeparator
