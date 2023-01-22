@@ -1,5 +1,25 @@
 # Make Configuration Easier
 
+# Installation
+
+## Linux
+
+Using CURL:
+
+```bash
+curl -sSf https://github.com/Toliak/MakeLinuxEasier/blob/master/install.sh | sh
+```
+
+Using WGET:
+
+```bash
+TODO
+```
+
+## Windows
+
+TODO
+
 # Dependency graph
 
 ```mermaid
@@ -28,7 +48,7 @@ graph LR
 
         MLE_4["Oh My Tmux"]
 
-        MLE_5["App installation\n<i>zsh, powerline, tmux, vim, git"]
+        MLE_5["App installation<br>><i>zsh, powerline, tmux, vim, git"]
 
         MLE_1 --> MLE_0
         MLE_2 --> MLE_0
@@ -65,6 +85,8 @@ graph LR
     US --> MCE
     MLE --> MCE
     MISC --> MCE
-    MCE["<b>Make\nConfiguration\nEasier</b>"]
+    MCE["<b>Make<br>>Configuration<br>>Easier</b>"]
 ```
+
+
 
