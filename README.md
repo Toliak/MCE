@@ -48,7 +48,7 @@ graph LR
 
         MLE_4["Oh My Tmux"]
 
-        MLE_5["App installation<br>><i>zsh, powerline, tmux, vim, git"]
+        MLE_5["App installation<br><i>zsh, powerline, tmux, vim, git"]
 
         MLE_1 --> MLE_0
         MLE_2 --> MLE_0
@@ -85,7 +85,7 @@ graph LR
     US --> MCE
     MLE --> MCE
     MISC --> MCE
-    MCE["<b>Make<br>>Configuration<br>>Easier</b>"]
+    MCE["<b>Make<br>Configuration<br>Easier</b>"]
 ```
 
 

@@ -80,22 +80,19 @@ function mceMain() {
     printf "[%s] %s -- %s\n" "$SHORTCUT" "$MODULE_NAME" "$MODULE_DESC"
   done
 
-  # TODO(toliak): Ordering must be declared by the modules directories
-  INSTALL_RESULT="0"
-  for (( I=0; I<"$STRING_LENGTH"; I++ )); do
-    local SHORTCUT="${MODULE_IDS:$I:1}"
-    local MODULE_ID
-    MODULE_ID=$(firstStringContainsCharIndex "$SHORTCUT_STR" "$SHORTCUT")
-    # TODO(toliak): code duplication
-    if [ "$MODULE_ID" = "${#SHORTCUT_STR}" ] || [ "$MODULE_ID" -gt "${#ALL_MODULES[@]}" ]; then
-      printf "Module with ID \x1b[34m%s\x1b[0m [%s] \x1b[31mnot found\x1b[0m\n" \
-        "$MODULE_ID" "$SHORTCUT"
+  local INSTALL_RESULT
+  local I
+  for I in "${!ALL_MODULES[@]}"; do
+    local MODULE="${ALL_MODULES[$I]}"
+    local SHORTCUT="${SHORTCUT_STR:$I:1}"
+    local CHAR_ID
+    CHAR_ID=$(firstStringContainsCharIndex "$MODULE_IDS" "$SHORTCUT")
+    if [ "$CHAR_ID" = "${#MODULE_IDS}" ]; then
       continue
     fi
 
     printSeparator
 
-    local MODULE="${ALL_MODULES[$MODULE_ID]}"
     printf "Module [%s] \x1b[34m%s\x1b[0m\n" "$SHORTCUT" "$MODULE"
     set +e
     installModule "$MODULE"
@@ -108,6 +105,10 @@ function mceMain() {
   done
 
   printSeparator
+
+  if [ ! "$INSTALL_RESULT" = "0" ]; then
+    return "$INSTALL_RESULT"
+  fi
 }
 
 

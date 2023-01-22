@@ -175,6 +175,10 @@ function installModule() {
 
   printf "Performing installation process...\n"
   installTheModule
+  local INSTALL_RESULT="$?"
+  if [ ! "$INSTALL_RESULT" = "0" ]; then
+      return 1
+  fi
 
   printf "Performing after check...\n"
   checkTheModuleAfter
@@ -251,16 +255,17 @@ function printSeparator() {
 
 # @param $1 String to search in
 # @param $2 Char to search for
-# @return 0 if the is match, 1 otherwise
 function doesStringContainsChar() {
   local SEARCH_IN="$1"
   local SEARCH_FOR="$2"
 
-  if firstStringContainsCharIndex "$SEARCH_IN" "$SEARCH_FOR" >/dev/null; then
-    return 0
+  local CHAR_ID
+  CHAR_ID=$(firstStringContainsCharIndex "$SEARCH_IN" "$SEARCH_FOR")
+  if [ "$CHAR_ID" = "${#SEARCH_IN}" ]; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 # @param $1 String to search in
@@ -282,7 +287,7 @@ function firstStringContainsCharIndex() {
   done
 
   printf "%s" "$STRING_LENGTH"
-  return 1
+#  return 1
 }
 
 # @param $1 String to reduce
