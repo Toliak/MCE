@@ -15,7 +15,7 @@ function checkTheModuleBefore() {
   OS=$(detectOs)
 
   if [ "$OS" = "unknown" ]; then
-    printf "Is not available\n"
+    printf "\e[31mUnable to detect OS. Packages are not available\e[0m\n"
     return 1
   fi
 

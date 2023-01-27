@@ -11,7 +11,7 @@ function installTheModule() {
   local ULTIMATE_VIM_URL="https://github.com/amix/vimrc.git"
 
   if [ -e "$VIM_RUNTIME" ]; then
-    printf '\e[34mUltimate Vim\e[0m is \e[32malready installed\e[0m\n'
+    printf '\e[34mUltimate Vim\e[0m is \e[1;33malready installed\e[0m\n'
     return 0
   fi
 

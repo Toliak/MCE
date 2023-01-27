@@ -11,7 +11,7 @@ function installTheModule() {
   local OH_MY_TMUX_URL="https://github.com/gpakosz/.tmux.git"
 
   if [ -e "$OH_MY_TMUX_PATH" ]; then
-    printf '\e[34mOh My TMUX\e[0m is \e[32malready installed\e[0m\n'
+    printf '\e[34mOh My TMUX\e[0m is \e[1;33malready installed\e[0m\n'
     return 0
   fi
 
