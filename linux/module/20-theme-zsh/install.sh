@@ -48,12 +48,6 @@ function _installTheModuleHighlight() {
 function installTheModule() {
   local MODULE_DIR
   MODULE_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-  local ZSHRC="$HOME/.zshrc"
-
-  if [ ! -e "$ZSHRC" ]; then
-    printf '\e[34mZshrc\e[0m \e[31mnot found\e[0m\n'
-    return 1
-  fi
 
   _installTheModuleOhMyZsh
   _installTheModulePowerlevel

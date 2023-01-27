@@ -11,6 +11,12 @@ function checkTheModuleBeforeAll() {
 # @stderr Error messages
 # @return Check status
 function checkTheModuleBefore() {
+  local VIM_RUNTIME
+  VIM_RUNTIME=$( getTheModuleVimRuntime )
+  if [ ! -e "$VIM_RUNTIME" ]; then
+    printf '\e[34mUltimate Vim\e[0m is not \e[31minstalled\e[0m\n' >&2
+    return 1
+  fi
   return 0
 }
 

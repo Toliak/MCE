@@ -81,6 +81,7 @@ function mceMain() {
   done
 
   local INSTALL_RESULT
+  INSTALL_RESULT="0"
   local I
   for I in "${!ALL_MODULES[@]}"; do
     local MODULE="${ALL_MODULES[$I]}"

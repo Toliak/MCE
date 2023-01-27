@@ -172,11 +172,15 @@ function installModule() {
 
   printf "Performing before check...\n"
   checkTheModuleBefore
+  RESULT="$?"
+  if [ ! "$RESULT" = "0" ]; then
+      return 1
+  fi
 
   printf "Performing installation process...\n"
   installTheModule
-  local INSTALL_RESULT="$?"
-  if [ ! "$INSTALL_RESULT" = "0" ]; then
+  RESULT="$?"
+  if [ ! "$RESULT" = "0" ]; then
       return 1
   fi
 

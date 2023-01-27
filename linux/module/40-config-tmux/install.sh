@@ -8,16 +8,10 @@ function installTheModule() {
   local MODULE_DIR
   MODULE_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
   local MODULE_DATA_DIR="$MODULE_DIR/data"
-  local ZSHRC="$HOME/.zshrc"
-  if [ ! -e "$ZSHRC" ]; then
-    printf '\e[34mZshrc\e[0m \e[31mnot found\e[0m\n'
-    return 1
-  fi
 
   local DATA_TMUX_CONF_LINE="source -q $MODULE_DATA_DIR/tmux.conf"
-
   if grep -Fxq "$DATA_TMUX_CONF_LINE" "$HOME/.tmux.conf.local"; then
-      printf '\e[34mAdditional TMUX configs\e[0m is \e[32malready installed\e[0m\n'
+      printf '\e[34mAdditional TMUX configs\e[0m is \e[1;33malready installed\e[0m\n'
       return 0
   fi
 
