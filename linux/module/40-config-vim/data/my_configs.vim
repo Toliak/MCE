@@ -27,6 +27,10 @@ filetype indent off
 :silent! au FileType javascript,typescript :silent! iunmap <buffer> $r
 :silent! au FileType javascript,typescript iunmap <buffer> $f
 
+" Fix dollar-sign in Visual mode
+:silent! vunmap $$
+:silent! nunmap $$
+
 " Hotkeys
 :set timeoutlen=10000
 noremap <silent> <C-w>L :vertical resize -5<CR>
@@ -48,4 +52,3 @@ vnoremap d "_d
 " Delete autocompletion
 let b:AutoPairs={}
 let g:AutoPairs={}
-

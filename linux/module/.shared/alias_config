@@ -57,7 +57,7 @@ function k() {
 
     if [ ! "$LINE" = "Y" ]; then
         printf "\n\e[31mCancelled\e[0m\n"
-        exit 1
+        return 1
     fi
     printf "\n\e[32mConfirmed\e[0m\n"
     "$@"
