@@ -11,12 +11,12 @@ function installTheModule() {
   local ULTIMATE_VIM_URL="https://github.com/amix/vimrc.git"
 
   if [ -e "$VIM_RUNTIME" ]; then
-    printf '\x1b[34mUltimate Vim\x1b[0m is \x1b[32malready installed\x1b[0m\n'
+    printf '\e[34mUltimate Vim\e[0m is \e[32malready installed\e[0m\n'
     return 0
   fi
 
   git clone --depth=1 "$ULTIMATE_VIM_URL" "$VIM_RUNTIME"
   sh "$VIM_RUNTIME/install_awesome_vimrc.sh"
-  printf '\x1b[34mUltimate Vim\x1b[0m \x1b[32minstalled\x1b[0m\n'
+  printf '\e[34mUltimate Vim\e[0m \e[32minstalled\e[0m\n'
   return 0
 }

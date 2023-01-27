@@ -10,7 +10,7 @@ function installTheModule() {
   local MODULE_DATA_DIR="$MODULE_DIR/data"
   local ZSHRC="$HOME/.zshrc"
   if [ ! -e "$ZSHRC" ]; then
-    printf '\x1b[34mZshrc\x1b[0m \x1b[31mnot found\x1b[0m\n'
+    printf '\e[34mZshrc\e[0m \e[31mnot found\e[0m\n'
     return 1
   fi
 

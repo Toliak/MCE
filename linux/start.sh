@@ -10,11 +10,11 @@ source "$PROJECT_DIR/misc.sh"
 # WARNING: DO NOT USE $SCRIPT_DIR ANYMORE!
 
 function mceLogVariables() {
-  printf "Variable \x1b[34m%s\x1b[0m = '\x1b[35m%s\x1b[0m'\n" \
+  printf "Variable \e[34m%s\e[0m = '\e[35m%s\e[0m'\n" \
     "PROJECT_ROOT_DIR" "$PROJECT_ROOT_DIR"
-  printf "Variable \x1b[34m%s\x1b[0m = '\x1b[35m%s\x1b[0m'\n" \
+  printf "Variable \e[34m%s\e[0m = '\e[35m%s\e[0m'\n" \
     "PROJECT_DIR" "$PROJECT_DIR"
-  printf "Variable \x1b[34m%s\x1b[0m = '\x1b[35m%s\x1b[0m'\n" \
+  printf "Variable \e[34m%s\e[0m = '\e[35m%s\e[0m'\n" \
     "MODULES_DIR" "$MODULES_DIR"
 }
 
@@ -64,7 +64,7 @@ function mceMain() {
     local MODULE_ID
     MODULE_ID=$(firstStringContainsCharIndex "$SHORTCUT_STR" "$SHORTCUT")
     if [ "$MODULE_ID" = "${#SHORTCUT_STR}" ] || [ "$MODULE_ID" -gt "${#ALL_MODULES[@]}" ]; then
-      printf "Module with ID \x1b[34m%s\x1b[0m [%s] \x1b[31mnot found\x1b[0m\n" \
+      printf "Module with ID \e[34m%s\e[0m [%s] \e[31mnot found\e[0m\n" \
         "$MODULE_ID" "$SHORTCUT"
       continue
     fi
@@ -93,13 +93,13 @@ function mceMain() {
 
     printSeparator
 
-    printf "Module [%s] \x1b[34m%s\x1b[0m\n" "$SHORTCUT" "$MODULE"
+    printf "Module [%s] \e[34m%s\e[0m\n" "$SHORTCUT" "$MODULE"
     set +e
     installModule "$MODULE"
     INSTALL_RESULT="$?"
     set -e
     if [ ! "$INSTALL_RESULT" = "0" ]; then
-      printf "Module [%s] \x1b[34m%s\x1b[0m installation failed\n" \
+      printf "Module [%s] \e[34m%s\e[0m installation failed\n" \
         "$SHORTCUT" "$MODULE"
     fi
   done

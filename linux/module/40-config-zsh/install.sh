@@ -11,7 +11,7 @@ function installTheModule() {
   local ZSHRC="$HOME/.zshrc"
 
   if [ ! -e "$ZSHRC" ]; then
-    printf '\x1b[34mZshrc\x1b[0m \x1b[31mnot found\x1b[0m\n'
+    printf '\e[34mZshrc\e[0m \e[31mnot found\e[0m\n'
     return 1
   fi
 
@@ -29,7 +29,7 @@ function installTheModule() {
   echo "$DATA_ALIAS_CONFIG_LINE" >>"$ZSHRC"
 
   if [ ! -f "$DATA_ALIAS_CONFIG_OS_PATH" ]; then
-    printf '\x1b[34mAlias \x1b[0m os-specific config \x1b[31mnot found\x1b[0m\n'
+    printf '\e[34mAlias \e[0m os-specific config \e[31mnot found\e[0m\n'
   else
     echo "source $DATA_ALIAS_CONFIG_PATH" >>"$ZSHRC"
   fi

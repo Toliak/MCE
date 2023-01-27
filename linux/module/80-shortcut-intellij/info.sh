@@ -13,5 +13,5 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "Shortcut for IntelliJ (\x1b[31mOld configuration will be removed\x1b[0m)"
+  printf "Shortcut for IntelliJ (\e[31mOld configuration will be removed\e[0m)"
 }

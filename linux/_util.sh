@@ -153,7 +153,7 @@ function installModule() {
   local MODULE_DESC
   MODULE_DESC=$(getTheModuleDescription)
 
-  printf "Installing module \x1b[34m%s\x1b[0m -- %s\n" \
+  printf "Installing module \e[34m%s\e[0m -- %s\n" \
     "$MODULE_NAME" "$MODULE_DESC"
 
   printf "Checking required commands...\n"
@@ -183,7 +183,7 @@ function installModule() {
   printf "Performing after check...\n"
   checkTheModuleAfter
 
-  printf "Module \x1b[34m%s\x1b[0m installation complete" "$MODULE_NAME"
+  printf "Module \e[34m%s\e[0m installation complete" "$MODULE_NAME"
 }
 
 # @param $1 Array of Module names
@@ -203,7 +203,7 @@ function checkAllModulesBeforeAll() {
     set -e
 
     if [ ! "$LOCAL_RESULT" = "0" ]; then
-      printf "Module \x1b[34m%s\x1b[0m check (beforeAll) \x1b[31mfailed\x1b[0m\n" "$MODULE"
+      printf "Module \e[34m%s\e[0m check (beforeAll) \e[31mfailed\e[0m\n" "$MODULE"
       RESULT="1"
     fi
   done
@@ -226,7 +226,7 @@ function getModuleShortcutsString() {
 function checkCommand() {
   local COMMAND="$1"
   if ! command -v "$COMMAND" 1>/dev/null 2>/dev/null; then
-    printf "checkCommand: Command \"\x1b[34m%s\x1b[0m\" \x1b[31mnot found\x1b[0m\n" \
+    printf "checkCommand: Command \"\e[34m%s\e[0m\" \e[31mnot found\e[0m\n" \
       "$COMMAND" >&2
     return 1
   fi
@@ -241,16 +241,16 @@ function printFormatArray() {
   ARRAY="$1"
   local ITEM
   for ITEM in ${ARRAY[*]}; do
-    printf "%s \x1b[1;34m%s\x1b[0m\n" "-" "$ITEM"
+    printf "%s \e[1;34m%s\e[0m\n" "-" "$ITEM"
   done
 }
 
 # @param $1 Array of strings
 # @stdout Separator line
 function printSeparator() {
-  printf "\x1b[0m\n"
+  printf "\e[0m\n"
   printf "/_________________________________________________________________________________/\n"
-  printf "\x1b[0m\n"
+  printf "\e[0m\n"
 }
 
 # @param $1 String to search in

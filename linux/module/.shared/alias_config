@@ -49,17 +49,17 @@ function search-all() {
 }
 
 function k() {
-    printf "Confirm? \x1b[34m[y/N]\x1b[0m  "
+    printf "Confirm? \e[34m[y/N]\e[0m  "
 
     local LINE=""
     read -r LINE
     LINE=$(echo "$LINE" | tr 'a-z' 'A-Z')
 
     if [ ! "$LINE" = "Y" ]; then
-        printf "\n\x1b[31mCancelled\x1b[0m\n"
+        printf "\n\e[31mCancelled\e[0m\n"
         exit 1
     fi
-    printf "\n\x1b[32mConfirmed\x1b[0m\n"
+    printf "\n\e[32mConfirmed\e[0m\n"
     "$@"
 }
 
@@ -112,7 +112,7 @@ function genpass() {
 function sus() {
     COLOR=$((30 + $RANDOM % 6))
 
-    printf "\x1b[${COLOR}m"
+    printf "\e[${COLOR}m"
     printf '           ⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀        \n'
     printf '        ⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀     \n'
     printf '        ⣼⣿⠋        ⢀⣀⣀⠈⢻⣿⣿⡄    \n'
@@ -124,7 +124,7 @@ function sus() {
     printf ' ⣸⣿⡇  ⣿⣿⡇       ⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇  \n'
     printf ' ⣿⣿⠁  ⣿⣿⡇                  ⢸⣿⣧  \n'
     printf ' ⣿⣿   ⣿⣿⡇                  ⢸⣿⣿  \n'
-    printf " ⣿⣿   ⣿⣿⡇   \x1b[01;31mAre you root?\x1b[00;${COLOR}m  ⢸⣿⣿  \n"
+    printf " ⣿⣿   ⣿⣿⡇   \e[01;31mAre you root?\e[00;${COLOR}m  ⢸⣿⣿  \n"
     printf ' ⢿⣿⡆  ⣿⣿⡇                   ⢸⣿⡇  \n'
     printf ' ⠸⣿⣧⡀ ⣿⣿⡇                   ⣿⣿⠃  \n'
     printf '  ⠛⢿⣿⣿⣿⣿⣇     ⣰⣿⣿⣷⣶⣶⣶⣶⠶    ⢠⣿⣿   \n'
@@ -132,7 +132,7 @@ function sus() {
     printf '        ⣿⣿      ⣿⣿⡇ ⢹⣿⡆     ⣸⣿⠇   \n'
     printf '        ⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁   ⠈⠻⣿⣿⣿⣿⡿⠏    \n'
     printf '        ⠈⠛⠻⠿⠿⠿⠿⠋⠁              \n'
-    printf '\x1b[0m\n'
+    printf '\e[0m\n'
 
     sudo su
 }

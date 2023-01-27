@@ -13,5 +13,5 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "Vim configuration (\x1b[31mOld configuration will be removed\x1b[0m)"
+  printf "Vim configuration (\e[31mOld configuration will be removed\e[0m)"
 }
