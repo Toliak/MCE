@@ -7,7 +7,7 @@ function getTheModuleName() {
 
 # @stdout Array of required commands
 function getTheModuleRequiredCommands() {
-  ARRAY=(git)
+  ARRAY=(git tmux)
   printf "%s" "${ARRAY[*]}"
 }
 

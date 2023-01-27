@@ -7,7 +7,7 @@ function getTheModuleName() {
 
 # @stdout Array of required commands
 function getTheModuleRequiredCommands() {
-  ARRAY=(git sed)
+  ARRAY=(git sed zsh)
   printf "%s" "${ARRAY[*]}"
 }
 
