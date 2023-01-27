@@ -63,7 +63,7 @@ function mceMain() {
     local SHORTCUT="${MODULE_IDS:$I:1}"
     local MODULE_ID
     MODULE_ID=$(firstStringContainsCharIndex "$SHORTCUT_STR" "$SHORTCUT")
-    if [ "$MODULE_ID" = "${#SHORTCUT_STR}" ] || [ "$MODULE_ID" -gt "${#ALL_MODULES[@]}" ]; then
+    if [ "$MODULE_ID" = "${#SHORTCUT_STR}" ] || [ "$MODULE_ID" -ge "${#ALL_MODULES[@]}" ]; then
       printf "Module with ID \e[34m%s\e[0m [%s] \e[31mnot found\e[0m\n" \
         "$MODULE_ID" "$SHORTCUT"
       continue
