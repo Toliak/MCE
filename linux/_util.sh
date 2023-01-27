@@ -253,7 +253,7 @@ function printFormatArray() {
 # @stdout Separator line
 function printSeparator() {
   printf "\e[0m\n"
-  printf "/_________________________________________________________________________________/\n"
+  printf '\\_________________________________________________________________________________\\\n'
   printf "\e[0m\n"
 }
 

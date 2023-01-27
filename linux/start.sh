@@ -56,7 +56,7 @@ function mceMain() {
   MODULE_IDS=$(reduceStringToSingleChar "$USER_INPUT")
 
   # TODO(toliak): move user_input filtering into the separated function
-  printf "Will be installed:\n"
+  printf "\nWill be installed:\n"
   local STRING_LENGTH="${#MODULE_IDS}"
   local I
   for (( I=0; I<"$STRING_LENGTH"; I++ )); do

@@ -8,6 +8,6 @@ function installTheModule() {
   local MODULE_DIR
   MODULE_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-  printf "Not implemented yet\n"
+  printf "\e[1;5;33mNot implemented yet\e[0m\n"
   return 1
 }
