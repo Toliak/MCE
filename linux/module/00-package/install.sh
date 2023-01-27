@@ -53,6 +53,7 @@ function _installTheModulePackages() {
     "tmux"
     "vim"
     "curl"
+    "xclip"
   )
   if [ "$OS" = "debian" ]; then
     APPS+=()
