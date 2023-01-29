@@ -13,5 +13,6 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "Ultimate Vim"
+  printf "Ultimate Vim\n"
+  printf "Source: \e[1;4;34m%s\e[0m\n" "$(getTheModuleThemeUrl)"
 }

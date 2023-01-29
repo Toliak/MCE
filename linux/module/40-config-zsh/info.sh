@@ -13,5 +13,7 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "Zsh configuration (\e[31mOld configuration will be removed\e[0m)"
+  printf "Zsh configuration\n"
+  printf "%s\n" "$(formatPrintTheModuleRequired 'Zsh Theme')"
+  printf "%s\n" "$(formatPrintTheModuleOldConfigurationNotice)"
 }

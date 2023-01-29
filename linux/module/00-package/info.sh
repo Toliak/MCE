@@ -13,5 +13,6 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "Packages: git, zsh, tmux, vim, curl ..."
+  printf "Packages: git, zsh,  tmux  \n"
+  printf "          vim, curl, xclip \n"
 }

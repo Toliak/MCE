@@ -5,13 +5,11 @@ set -eu
 # Variables initialization
 REPO_URL="https://github.com/Toliak/MCE"
 
-set +u
-if [ "$1" = "" ]; then
+if [ -z ${1+x} ]; then
   INSTALL_PATH="$HOME/.local/share/MakeConfigEasier"
 else
   INSTALL_PATH="$1"
 fi
-set -u
 
 printf "Installation path: \e[1;4;34m%s\e[0m\n" "$INSTALL_PATH"
 

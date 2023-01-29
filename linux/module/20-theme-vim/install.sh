@@ -1,5 +1,10 @@
 #! /bin/bash
 
+# @stdout URL
+function getTheModuleThemeUrl() {
+  printf "https://github.com/amix/vimrc.git"
+}
+
 # Installation
 # @stderr Error messages
 # @stdout Log messages
@@ -8,7 +13,8 @@ function installTheModule() {
   local MODULE_DIR
   MODULE_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
   local VIM_RUNTIME="$HOME/.vim_runtime"
-  local ULTIMATE_VIM_URL="https://github.com/amix/vimrc.git"
+  local ULTIMATE_VIM_URL
+  ULTIMATE_VIM_URL=$(getTheModuleThemeUrl)
 
   if [ -e "$VIM_RUNTIME" ]; then
     printf '\e[34mUltimate Vim\e[0m is \e[1;33malready installed\e[0m\n'

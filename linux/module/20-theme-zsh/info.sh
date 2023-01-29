@@ -13,5 +13,12 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "Oh My Zsh"
+  printf "Oh My Zsh with additions\n"
+  printf "Plugin list with sources:\n"
+  printf "  %22s: \e[1;4;34m%s\e[0m\n" \
+    "Oh My Zsh" "$(getTheModuleOhMyZshUrl)"
+  printf "  %22s: \e[1;4;34m%s\e[0m\n" \
+    "PowerLevel 10k" "$(getTheModulePowerlevelUrl)"
+  printf "  %22s: \e[1;4;34m%s\e[0m\n" \
+    "Zsh Syntax Highlight" "$(getTheModuleHighlightUrl)"
 }

@@ -1,8 +1,14 @@
 #! /bin/bash
 
+# @stdout URL
+function getTheModuleOhMyZshUrl() {
+  printf "https://github.com/robbyrussell/oh-my-zsh.git"
+}
+
 function _installTheModuleOhMyZsh() {
   local OH_MY_ZSH_PATH="$HOME/.oh-my-zsh"
-  local OH_MY_ZSH_URL="https://github.com/robbyrussell/oh-my-zsh.git"
+  local OH_MY_ZSH_URL
+  OH_MY_ZSH_URL=$(getTheModuleOhMyZshUrl)
   if [ -e "$OH_MY_ZSH_PATH" ]; then
     printf '\e[34mOh my ZSH\e[0m is \e[1;33malready installed\e[0m\n'
     return 0
@@ -13,10 +19,16 @@ function _installTheModuleOhMyZsh() {
   printf '\e[34mOh my ZSH\e[0m is \e[32minstalled\e[0m\n'
 }
 
+# @stdout URL
+function getTheModulePowerlevelUrl() {
+  printf "https://github.com/romkatv/powerlevel10k.git"
+}
+
 function _installTheModulePowerlevel() {
   local OH_MY_ZSH_PATH="$HOME/.oh-my-zsh"
   local POWERLEVEL_10K_PATH="$OH_MY_ZSH_PATH/custom/themes/powerlevel10k"
-  local POWERLEVEL_10K_URL="https://github.com/romkatv/powerlevel10k.git"
+  local POWERLEVEL_10K_URL
+  POWERLEVEL_10K_URL=$(getTheModulePowerlevelUrl)
   if [ -e "$POWERLEVEL_10K_PATH" ]; then
     printf '\e[34mPowerLevel 10k\e[0m is \e[1;33malready installed\e[0m\n'
     return 0
@@ -27,10 +39,16 @@ function _installTheModulePowerlevel() {
   printf '\e[34mPowerLevel 10k\e[0m is \e[32minstalled\e[0m\n'
 }
 
+# @stdout URL
+function getTheModuleHighlightUrl() {
+  printf "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+}
+
 function _installTheModuleHighlight() {
   local OH_MY_ZSH_PATH="$HOME/.oh-my-zsh"
   local ZSH_SYNTAX_HIGHLIGHT_PATH="$OH_MY_ZSH_PATH/custom/zsh-syntax-highlighting"
-  local ZSH_SYNTAX_HIGHLIGHT_URL="https://github.com/zsh-users/zsh-syntax-highlighting.git"
+  local ZSH_SYNTAX_HIGHLIGHT_URL
+  ZSH_SYNTAX_HIGHLIGHT_URL=$(getTheModuleHighlightUrl)
   if [ -e "$ZSH_SYNTAX_HIGHLIGHT_PATH" ]; then
     printf '\e[34mZSH Syntax Highlighting\e[0m is \e[1;33malready installed\e[0m\n'
     return 0

@@ -13,5 +13,7 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "Tmux configuration (\e[31mOld configuration will be removed\e[0m)"
+  printf "Tmux configuration\n"
+  printf "%s\n" "$(formatPrintTheModuleRequired 'Tmux Theme')"
+  printf "%s\n" "$(formatPrintTheModuleOldConfigurationNotice)"
 }

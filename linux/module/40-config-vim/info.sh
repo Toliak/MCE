@@ -13,5 +13,7 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "Vim configuration (\e[31mOld configuration will be removed\e[0m)"
+  printf "Vim configuration\n"
+  printf "%s\n" "$(formatPrintTheModuleRequired 'Vim Theme')"
+  printf "%s\n" "$(formatPrintTheModuleOldConfigurationNotice)"
 }

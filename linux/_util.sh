@@ -7,6 +7,8 @@ PROJECT_ROOT_DIR=$(realpath "$SCRIPT_DIR/..")
 PROJECT_DIR=$(realpath "$PROJECT_ROOT_DIR/linux")
 MODULES_DIR=$(realpath "$PROJECT_DIR/module")
 
+source "$SCRIPT_DIR/_util_module.sh"
+
 # ----------
 # Modules
 # ----------
@@ -145,16 +147,14 @@ function checkModule() {
 # @stderr Error messages
 # @stdout Log messages
 function installModule() {
-  local MODULE_NAME="$1"
+  local MODULE="$1"
   loadModuleContext "$MODULE"
 
   local MODULE_NAME
   MODULE_NAME=$(getTheModuleName)
-  local MODULE_DESC
-  MODULE_DESC=$(getTheModuleDescription)
 
   printf "Installing module \e[34m%s\e[0m -- %s\n" \
-    "$MODULE_NAME" "$MODULE_DESC"
+    "$MODULE" "$MODULE_NAME"
 
   printf "Checking required commands...\n"
   local COMMANDS
@@ -236,6 +236,27 @@ function checkCommand() {
   fi
 
   return 0
+}
+
+# @return 0 if user is root, 1 otherwise
+function isUserRoot() {
+  if [ "$UID" = "0" ]; then
+    return 0
+  fi
+
+  return 1
+}
+
+# @param $1 Command
+# @stdout Result command (with or without sudo)
+function sudolifyCommand() {
+  local CMD="$1"
+  if isUserRoot; then
+    printf "%s" "$CMD"
+    return
+  fi
+
+  printf "sudo %s" "$CMD"
 }
 
 # @param $1 Array of strings

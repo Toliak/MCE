@@ -1,5 +1,10 @@
 #! /bin/bash
 
+# @stdout File path
+function getTheModuleTmuxConfLocal() {
+  printf "$HOME/.tmux.conf.local"
+}
+
 # Installation
 # @stderr Error messages
 # @stdout Log messages
@@ -8,20 +13,18 @@ function installTheModule() {
   local MODULE_DIR
   MODULE_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
   local MODULE_DATA_DIR="$MODULE_DIR/data"
+  local TMUX_CONF_LOCAL
+  TMUX_CONF_LOCAL=$(getTheModuleTmuxConfLocal)
 
-  local DATA_TMUX_CONF_LINE="source -q $MODULE_DATA_DIR/tmux.conf"
-  if grep -Fxq "$DATA_TMUX_CONF_LINE" "$HOME/.tmux.conf.local"; then
-      printf '\e[34mAdditional TMUX configs\e[0m is \e[1;33malready installed\e[0m\n'
-      return 0
-  fi
+  checkAppendTheModuleLineIntoFileSilent \
+    "source -q $MODULE_DATA_DIR/tmux.conf" \
+    "$TMUX_CONF_LOCAL" \
+    "Additional TMUX configs"
 
-  echo "$DATA_TMUX_CONF_LINE" >>"$HOME/.tmux.conf.local"
-  printf '\e[34mAdditional TMUX configs\e[0m is \e[32minstalled\e[0m\n'
-
-  sed -i 's/#set \-g @plugin '"'"'tmux\-plugins\/tmux-cpu'"'"'/set -g @plugin '"'"'tmux-plugins\/tmux-cpu'"'"'/g' "$HOME/.tmux.conf.local"
+  sed -i 's/#set \-g @plugin '"'"'tmux\-plugins\/tmux-cpu'"'"'/set -g @plugin '"'"'tmux-plugins\/tmux-cpu'"'"'/g' "$TMUX_CONF_LOCAL"
   printf '\e[34mtmux-plugins/tmux-cpu\e[0m enabled\n'
 
-  sed -i 's/#set \-g @plugin '"'"'tmux\-plugins\/tmux-resurrect'"'"'/set -g @plugin '"'"'tmux-plugins\/tmux-resurrect'"'"'/g' "$HOME/.tmux.conf.local"
+  sed -i 's/#set \-g @plugin '"'"'tmux\-plugins\/tmux-resurrect'"'"'/set -g @plugin '"'"'tmux-plugins\/tmux-resurrect'"'"'/g' "$TMUX_CONF_LOCAL"
   printf '\e[34mtmux-plugins/tmux-resurrect\e[0m enabled\n'
 
   return 0

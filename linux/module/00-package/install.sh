@@ -68,18 +68,6 @@ function _installTheModulePackages() {
   printf "%s" "${APPS[*]}"
 }
 
-# TODO(toliak): move into _util.sh
-# @param $1 Command
-function _installTheModuleSudolify() {
-  local CMD="$1"
-  if [ "$UID" = "0" ]; then
-    printf "%s" "$CMD"
-    return
-  fi
-
-  printf "sudo %s" "$CMD"
-}
-
 # Installation
 # @stderr Error messages
 # @stdout Log messages
@@ -99,14 +87,14 @@ function installTheModule() {
 
   local UPDATE_CMD
   UPDATE_CMD=$(_installTheModulePackageUpdate "$OS")
-  UPDATE_CMD=$(_installTheModuleSudolify "$UPDATE_CMD")
+  UPDATE_CMD=$(sudolifyCommand "$UPDATE_CMD")
 
   # shellcheck disable=SC2086
   $UPDATE_CMD
 
   local INSTALL_CMD
   INSTALL_CMD=$(_installTheModulePackageInstall "$OS")
-  INSTALL_CMD=$(_installTheModuleSudolify "$INSTALL_CMD")
+  INSTALL_CMD=$(sudolifyCommand "$INSTALL_CMD")
 
   # shellcheck disable=SC2086
   $INSTALL_CMD ${PACKAGES[*]}

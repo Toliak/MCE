@@ -13,5 +13,6 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "Bash configuration (\e[31mOld configuration will be removed\e[0m)"
+  printf "Additional bash configuration\n"
+  printf "%s\n" "$(formatPrintTheModuleOldConfigurationNotice)"
 }

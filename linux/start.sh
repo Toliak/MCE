@@ -46,7 +46,8 @@ function mceMain() {
     MODULE_DESC=$(getTheModuleDescription)
 
     local SHORTCUT="${SHORTCUT_STR:$I:1}"
-    printf "[%s] %s -- %s\n" "$SHORTCUT" "$MODULE_NAME" "$MODULE_DESC"
+    printf "\e[7m[%s]\e[0m %s -- %s\n" "$SHORTCUT" "$MODULE" "$MODULE_NAME"
+    printf "%s\n\n" "$MODULE_DESC"
   done
 
   printf "\nEnter script letters (square brackets) to install (without spaces):\n"
@@ -77,7 +78,7 @@ function mceMain() {
     MODULE_DESC=$(getTheModuleDescription)
 
     local SHORTCUT="${SHORTCUT_STR:$MODULE_ID:1}"
-    printf "[%s] %s -- %s\n" "$SHORTCUT" "$MODULE_NAME" "$MODULE_DESC"
+    printf "[%s] %s -- %s\n" "$SHORTCUT" "$MODULE" "$MODULE_NAME"
   done
 
   local INSTALL_RESULT
@@ -100,7 +101,7 @@ function mceMain() {
     INSTALL_RESULT="$?"
     set -e
     if [ ! "$INSTALL_RESULT" = "0" ]; then
-      printf "Module [%s] \e[34m%s\e[0m installation failed\n" \
+      printf "Module [%s] \e[34m%s\e[0m \e[31minstallation failed\e[0m\n" \
         "$SHORTCUT" "$MODULE"
     fi
   done

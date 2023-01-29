@@ -18,6 +18,6 @@ function installTheModule() {
   local MODULE_DATA_DIR="$MODULE_DIR/data"
 
   cp "$MODULE_DATA_DIR/my_configs.vim" "$VIM_RUNTIME/my_configs.vim"
-  printf '\e[34mUltimate Vim additional config\e[0m is \e[32minstalled\e[0m\n'
+  printf '\e[34mUltimate Vim additional config\e[0m \e[32minstalled\e[0m\n'
   return 0
 }
