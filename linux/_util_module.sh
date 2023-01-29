@@ -1,5 +1,3 @@
-
-
 # @stdout Message
 function formatPrintTheModuleOldConfigurationNotice() {
   printf "\e[1;31mOld configuration will be removed\e[0m"
@@ -63,4 +61,137 @@ function checkAppendTheModuleLineIntoFileSilent() {
     return 0
   fi
   return "$STATUS"
+}
+
+# ----------
+# Modules specific and shared
+# ----------
+
+# @param $1 Directory to check
+# @return 0, if the directory is a Jetbrains directory.
+#         1 otherwise
+function _isJetbrainsDir() {
+  local DIR="$1"
+  if [ ! -d "$DIR" ]; then
+    return 1
+  fi
+  if [ "$(find "$DIR" -mindepth 1 -type d | wc -l)" -le 1 ]; then
+    return 1
+  fi
+  if [ "$(find "$DIR" -mindepth 1 -type f | wc -l)" -le 1 ]; then
+    return 1
+  fi
+
+  return 0
+}
+
+# @stdout The detected directory
+# @stderr Log messages and errors
+# @return 0 if a directory found, 1 otherwise
+function detectJetbrainsDir() {
+  local DIRS_TO_CHECK=(
+    "$HOME/.local/share/JetBrains"
+    "$HOME/.JetBrains"
+    "/usr/share/JetBrains"
+    "/usr/local/share/JetBrains"
+  )
+
+  local DIR
+  for DIR in ${DIRS_TO_CHECK[*]}; do
+    if ! _isJetbrainsDir "$DIR"; then
+      printf "Directory \e[1;4;34m%s\e[0m is not a JetBrains directory\n" \
+        "$DIR" >&2
+      continue
+    fi
+
+    printf "Directory \e[1;4;34m%s\e[0m is a JetBrains directory\n" \
+      "$DIR" >&2
+    printf "%s" "$DIR"
+    return 0
+  done
+
+  printf "JetBrains directory not found\n" >&2
+  return 1
+}
+
+# @param $1 Directory to check
+# @return 0, if the directory is a Jetbrains directory.
+#         1 otherwise
+function _isJetbrainsConfigDir() {
+  local DIR="$1"
+  if [ ! -d "$DIR" ]; then
+    return 1
+  fi
+  if [ "$(find "$DIR" -mindepth 1 -type d | wc -l)" -le 1 ]; then
+    return 1
+  fi
+}
+
+# @stdout The detected directory
+# @stderr Log messages and errors
+# @return 0 if a directory found, 1 otherwise
+function detectJetbrainsConfigDir() {
+  local DIRS_TO_CHECK=(
+    "$HOME/.config/JetBrains"
+  )
+
+  local DIR
+  for DIR in ${DIRS_TO_CHECK[*]}; do
+    if ! _isJetbrainsConfigDir "$DIR"; then
+      printf "Directory \e[1;4;34m%s\e[0m is not a JetBrains Config directory\n" \
+        "$DIR" >&2
+      continue
+    fi
+
+    printf "Directory \e[1;4;34m%s\e[0m is a JetBrains Config directory\n" \
+      "$DIR" >&2
+    printf "%s" "$DIR"
+    return 0
+  done
+
+  printf "JetBrains Config directory not found\n" >&2
+  return 1
+}
+
+# @param $1 Directory to check
+# @return 0, if the directory is a Jetbrains directory.
+#         1 otherwise
+function _isJetbrainsIdeConfigDir() {
+  local DIR="$1"
+  if [ ! -d "$DIR" ]; then
+    return 1
+  fi
+  if [ "$(find "$DIR" -mindepth 1 -type d | wc -l)" -le 2 ]; then
+    return 1
+  fi
+  if [ "$(find "$DIR" -mindepth 1 -type f | wc -l)" -le 2 ]; then
+    return 1
+  fi
+
+  return 0
+}
+
+# @param $1 The Jetbrains IDE Config directory
+# @stdout The detected directory array
+# @stderr Log messages and errors
+function detectJetbrainsIdeConfigDirs() {
+  local DIR="$1"
+  local FOUND=()
+  for LOCAL_DIR in "$DIR"/*; do
+    if [ ! -d "$LOCAL_DIR" ]; then
+      printf "Entry \e[1;4;34m%s\e[0m is not a directory\n" \
+        "$LOCAL_DIR" >&2
+      continue
+    fi
+
+    if _isJetbrainsIdeConfigDir "$LOCAL_DIR"; then
+      printf "Directory \e[1;4;34m%s\e[0m is a JetBrains Config IDE directory\n" \
+        "$LOCAL_DIR" >&2
+      FOUND+=("$LOCAL_DIR")
+    else
+      printf "Directory \e[1;4;34m%s\e[0m is not a JetBrains Config IDE directory\n" \
+        "$LOCAL_DIR" >&2
+    fi
+  done
+  printf "%s" "${FOUND[*]}"
 }
