@@ -59,6 +59,7 @@ function clearModuleContext() {
   done
 }
 
+# @param $1 Module name
 function loadModuleContext() {
   local MODULE_NAME="$1"
   local LOCAL_PATH
@@ -177,7 +178,7 @@ function installModule() {
       return 1
   fi
 
-  printf "Performing installation process...\n"
+  printf "Performing installation...\n"
   installTheModule
   RESULT="$?"
   if [ ! "$RESULT" = "0" ]; then

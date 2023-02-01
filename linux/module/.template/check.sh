@@ -16,7 +16,7 @@ function checkTheModuleBefore() {
   return 0
 }
 
-# The check will be executed after the module installation complete
+# The check will be executed after the module installation finished
 # @stderr Error messages
 # @return Check status
 function checkTheModuleAfter() {
