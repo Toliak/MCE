@@ -2,7 +2,7 @@
 
 # @stdout Module name
 function getTheModuleName() {
-  printf "IntelliJ Shortcut"
+  printf "IntelliJ Preset"
 }
 
 # @stdout Array of required commands
@@ -13,6 +13,7 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "UnifiedShortcuts for IntelliJ\n"
+  printf "UI Preset for IntelliJ\n"
   printf "%s\n" "$(formatPrintTheModuleRequired 'Any JetBrains IDE')"
+  printf "%s\n" "$(formatPrintTheModuleOldConfigurationNotice)"
 }

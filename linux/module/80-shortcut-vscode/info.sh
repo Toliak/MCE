@@ -14,5 +14,6 @@ function getTheModuleRequiredCommands() {
 # @stdout Module description
 function getTheModuleDescription() {
   printf "UnifiedShortcuts for VSCode\n"
+  printf "%s\n" "$(formatPrintTheModuleRequired 'VSCode')"
   printf "%s\n" "$(formatPrintTheModuleOldConfigurationNotice)"
 }

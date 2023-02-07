@@ -1,0 +1,9 @@
+<application>
+  <component name="UISettings">
+    <option name="MARK_MODIFIED_TABS_WITH_ASTERISK" value="true" />
+    <option name="OPEN_IN_PREVIEW_TAB_IF_POSSIBLE" value="false" />
+    <option name="SHOW_CLOSE_BUTTON" value="false" />
+    <option name="SHOW_INPLACE_COMMENTS" value="true" />
+    <option name="SHOW_TOOL_WINDOW_NUMBERS" value="true" />
+  </component>
+</application>
