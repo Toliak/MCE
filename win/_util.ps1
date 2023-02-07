@@ -103,6 +103,17 @@ function global:CheckModule($moduleName) {
     }
 }
 
+# @param [string] $command The command
+# @return [bool] True if the command exists, False otherwise
+function global:CheckCommand($command) {
+    if (-not (Get-Command $_ -errorAction SilentlyContinue))
+    {
+        Write-Warning "Required command '$_'"
+        return $false
+    }
+    return $true
+}
+
 function global:InstallModule($moduleName) {
     $success = $true
     $modulePath = GetModulePath $moduleName
@@ -111,11 +122,9 @@ function global:InstallModule($moduleName) {
     Write-Information "Installing module '$moduleName'"
     Write-Information "Checking required commands"
 
-    # TODO(toliak): checkCommand
     GetTheModuleRequiredCommands | ForEach-Object {
-        if (-not (Get-Command $_ -errorAction SilentlyContinue))
+        if (-not (CheckCommand $_))
         {
-            Write-Warning "Module '$moduleName' requires command '$_'"
             $success = $false
         }
     }
@@ -139,6 +148,43 @@ function global:InstallModule($moduleName) {
     Write-Information "Module '$moduleName' installed"
 }
 
-# TODO(toliak): checkAllModulesBeforeAll
-# TODO(toliak): getModuleShortcutsString
-# TODO(toliak): checkCommand
+# @param [string[]] $moduleNames Module names to check
+# @return [bool] True, if all check passed. False, otherwise
+function global:CheckAllModulesBeforeAll($moduleNames) {
+    $status = $true
+    $moduleNames | ForEach-Object {
+        Write-Info "Checking module '$_'"
+        loadModuleContext $_
+
+        if (-not checkTheModuleBeforeAll) {
+            Write-Warning "Module '$_' check beforeAll failed"
+            $status = $false
+        }
+
+        clearModuleContext
+    }
+    return $status
+}
+
+# @return [string] Shortcuts string
+function getModuleShortcutsString() {
+    return "qwertyuiopasdfghjklzxcvbnm1234567890"
+}
+
+# @return [string] Separator string
+function getSeparatorString() {
+    return "\_____________________________________________________________________________\"
+}
+
+# @param [string] $strToReduce String to reduce
+# @return [string] Reduced string
+function reduceStringToSingleChar($strToReduce) {
+    $result = ""
+    $strToReduce | ForEach-Object {
+        if (-not ($result -contains $_)) {
+            $result = "$result$_"
+        }
+    }
+    return $result
+}
+
