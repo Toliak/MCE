@@ -35,6 +35,11 @@ function installTheModule() {
   printf "JetBrains directory: \e[1;4;34m%s\e[0m\n" "$JB_DIR"
 
   local JB_IDE_DIRS=($(detectJetbrainsIdeConfigDirs "$JB_DIR"))
+  if [ "${JB_IDE_DIRS[*]}" = "" ]; then
+    printf "\e[31m%s\e[0m\n" "JetBrains IDE Config directories not found"
+    return 1
+  fi
+
   printf "IDE Config directories:\n"
   printFormatArray "${JB_IDE_DIRS[*]}"
 

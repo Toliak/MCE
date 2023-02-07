@@ -27,8 +27,8 @@ function installTheModule() {
 
   local CODE_DIRS
   CODE_DIRS=$(detectVSCodeConfigDir)
-  STATUS="$?"
-  if [ ! "$STATUS" = "0" ]; then
+
+  if [ "${CODE_DIRS[*]}" = "" ]; then
     printf "\e[31m%s\e[0m\n" "VSCode Config directory not found"
     return 1
   fi
