@@ -1,6 +1,6 @@
 #! /bin/bash
 
-_THE_MODULE_DATA_DIR="$GLOBAL_SHARED_DATA_DIR/vscode-shortcuts"
+_THE_MODULE_DATA_DIR="$GLOBAL_SHARED_DATA_DIR/shortcuts-vscode"
 
 # @param $1 Directory
 # @stdout Log messages

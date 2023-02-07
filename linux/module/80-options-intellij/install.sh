@@ -1,6 +1,6 @@
 #! /bin/bash
 
-_THE_MODULE_DATA_DIR="$GLOBAL_SHARED_DATA_DIR/intellij-options"
+_THE_MODULE_DATA_DIR="$GLOBAL_SHARED_DATA_DIR/options-intellij"
 
 # @param $1 Directory
 # @stdout Log messages
