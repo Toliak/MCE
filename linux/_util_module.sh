@@ -68,6 +68,52 @@ function checkAppendTheModuleLineIntoFileSilent() {
 # ----------
 
 # @param $1 Directory to check
+# @return 0, if the directory is a VSCode directory.
+#         1 otherwise
+function _isVSCodeConfigDir() {
+  local DIR="$1"
+  if [ ! -d "$DIR" ]; then
+    return 1
+  fi
+  if [ "$(find "$DIR" -mindepth 1 -type d | wc -l)" -le 2 ]; then
+    return 1
+  fi
+  if [ "$(find "$DIR" -mindepth 1 -type f | wc -l)" -le 2 ]; then
+    return 1
+  fi
+
+  return 0
+}
+
+# @stdout The detected directories array
+# @stderr Log messages and errors
+# @return 0 if a directory found, 1 otherwise
+function detectVSCodeConfigDir() {
+  local DIRS_TO_CHECK=(
+    "$HOME/.config/Code"
+    "$HOME/.config/code"
+    "$HOME/.config/code-oss"
+    "$HOME/.config/Code-OSS"
+  )
+
+  local FOUND=()
+  local DIR
+  for DIR in "${DIRS_TO_CHECK[@]}"; do
+    if ! _isVSCodeConfigDir "$DIR"; then
+      printf "Directory \e[1;4;34m%s\e[0m is not a VSCode directory\n" \
+        "$DIR" >&2
+      continue
+    fi
+
+    printf "Directory \e[1;4;34m%s\e[0m is a VSCode directory\n" \
+      "$DIR" >&2
+    FOUND+=("$DIR")
+  done
+
+  printf "%s" "${FOUND[*]}"
+}
+
+# @param $1 Directory to check
 # @return 0, if the directory is a Jetbrains directory.
 #         1 otherwise
 function _isJetbrainsDir() {
@@ -112,6 +158,49 @@ function detectJetbrainsDir() {
 
   printf "JetBrains directory not found\n" >&2
   return 1
+}
+
+# @param $1 Directory to check
+# @return 0, if the directory is a Jetbrains directory.
+#         1 otherwise
+function _isJetbrainsIdeDir() {
+  local DIR="$1"
+  if [ ! -d "$DIR" ]; then
+    return 1
+  fi
+  if [ "$(find "$DIR" -mindepth 1 -type d | wc -l)" -le 2 ]; then
+    return 1
+  fi
+  if [ "$(find "$DIR" -mindepth 1 -type f | wc -l)" -le 2 ]; then
+    return 1
+  fi
+
+  return 0
+}
+
+# @param $1 The Jetbrains IDE directory
+# @stdout The detected directory array
+# @stderr Log messages and errors
+function detectJetbrainsIdeDirs() {
+  local DIR="$1"
+  local FOUND=()
+  for LOCAL_DIR in "$DIR"/*; do
+    if [ ! -d "$LOCAL_DIR" ]; then
+      printf "Entry \e[1;4;34m%s\e[0m is not a directory\n" \
+        "$LOCAL_DIR" >&2
+      continue
+    fi
+
+    if _isJetbrainsIdeDir "$LOCAL_DIR"; then
+      printf "Directory \e[1;4;34m%s\e[0m is a JetBrains IDE directory\n" \
+        "$LOCAL_DIR" >&2
+      FOUND+=("$LOCAL_DIR")
+    else
+      printf "Directory \e[1;4;34m%s\e[0m is not a JetBrains IDE directory\n" \
+        "$LOCAL_DIR" >&2
+    fi
+  done
+  printf "%s" "${FOUND[*]}"
 }
 
 # @param $1 Directory to check

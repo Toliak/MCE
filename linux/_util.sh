@@ -6,6 +6,8 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PROJECT_ROOT_DIR=$(realpath "$SCRIPT_DIR/..")
 PROJECT_DIR=$(realpath "$PROJECT_ROOT_DIR/linux")
 MODULES_DIR=$(realpath "$PROJECT_DIR/module")
+SHARED_DATA_DIR="$MODULES_DIR/.shared"
+GLOBAL_SHARED_DATA_DIR="$PROJECT_ROOT_DIR/shared_data"
 
 source "$SCRIPT_DIR/_util_module.sh"
 
@@ -31,10 +33,17 @@ function getAllModules() {
 }
 
 # @param $1 Module name
-# @stdout Array of module absolute paths
+# @stdout Module absolute path
 function getModulePath() {
   local NAME="$1"
   printf "%s" "$MODULES_DIR/$NAME"
+}
+
+# @param $1 Module name
+# @stdout Module data directory path
+function getModuleDataPath() {
+  local NAME="$1"
+  printf "%s" "$MODULES_DIR/$NAME/data"
 }
 
 # @stdout Array of function names
@@ -211,6 +220,8 @@ function checkAllModulesBeforeAll() {
       printf "Module \e[34m%s\e[0m check (beforeAll) \e[31mfailed\e[0m\n" "$MODULE"
       RESULT="1"
     fi
+
+    clearModuleContext
   done
 
   clearModuleContext
