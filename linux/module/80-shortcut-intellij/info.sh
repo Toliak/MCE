@@ -2,7 +2,7 @@
 
 # @stdout Module name
 function getTheModuleName() {
-  printf "(WIP) IntelliJ Shortcut"
+  printf "IntelliJ Shortcut"
 }
 
 # @stdout Array of required commands
@@ -13,5 +13,5 @@ function getTheModuleRequiredCommands() {
 
 # @stdout Module description
 function getTheModuleDescription() {
-  printf "Shortcut for IntelliJ (\e[31mOld configuration will be removed\e[0m)"
+  printf "UnifiedShortcuts for IntelliJ"
 }

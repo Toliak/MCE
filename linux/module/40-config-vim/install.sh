@@ -15,7 +15,7 @@ function installTheModule() {
   MODULE_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
   local VIM_RUNTIME
   VIM_RUNTIME=$( getTheModuleVimRuntime )
-  local MODULE_DATA_DIR="$MODULE_DIR/data"
+  local MODULE_DATA_DIR=$(getModuleDataPath $(basename "$MODULE_DIR"))
 
   cp "$MODULE_DATA_DIR/my_configs.vim" "$VIM_RUNTIME/my_configs.vim"
   printf '\e[34mUltimate Vim additional config\e[0m \e[32minstalled\e[0m\n'

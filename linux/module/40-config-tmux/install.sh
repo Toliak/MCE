@@ -12,7 +12,7 @@ function getTheModuleTmuxConfLocal() {
 function installTheModule() {
   local MODULE_DIR
   MODULE_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-  local MODULE_DATA_DIR="$MODULE_DIR/data"
+  local MODULE_DATA_DIR=$(getModuleDataPath $(basename "$MODULE_DIR"))
   local TMUX_CONF_LOCAL
   TMUX_CONF_LOCAL=$(getTheModuleTmuxConfLocal)
 

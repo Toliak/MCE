@@ -1,5 +1,7 @@
 #! /bin/bash
 
+_THE_MODULE_DATA_DIR="$GLOBAL_SHARED_DATA_DIR/intellij-shortcuts"
+
 # @param $1 Directory
 # @stdout Log messages
 function _installTheModuleIdeKeymap() {
@@ -7,15 +9,13 @@ function _installTheModuleIdeKeymap() {
 
   local MODULE_DIR
   MODULE_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-  local KEYMAP_FILE="$MODULE_DIR/data/UnifiedShortcuts.xml"
 
   local KEYMAP_TARGET_DIR="$DIR/keymaps"
-  local KEYMAP_TARGET="$KEYMAP_TARGET_DIR/UnifiedShortcuts.xml"
 
   mkdir -p "$KEYMAP_TARGET_DIR"
-  cp -f "$KEYMAP_FILE" "$KEYMAP_TARGET"
+  cp -f "$_THE_MODULE_DATA_DIR"/* "$KEYMAP_TARGET_DIR/"
 
-  printf "Keymap copied into \e[1;4;34m%s\e[0m\n" "$KEYMAP_TARGET"
+  printf "Keymap copied into \e[1;4;34m%s\e[0m\n" "$KEYMAP_TARGET_DIR"
 }
 
 # Installation

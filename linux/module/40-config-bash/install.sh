@@ -13,8 +13,7 @@ function installTheModule() {
   local MODULE_DIR
   MODULE_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-  local MODULE_DATA_DIR="$MODULE_DIR/data"
-  local SHARED_DATA_DIR="$MODULE_DIR/../.shared"
+  local MODULE_DATA_DIR=$(getModuleDataPath $(basename "$MODULE_DIR"))
   local DATA_BASH_CONFIG_PATH="$MODULE_DATA_DIR/bash_config"
   local DATA_ALIAS_CONFIG_PATH="$SHARED_DATA_DIR/alias_config"
 

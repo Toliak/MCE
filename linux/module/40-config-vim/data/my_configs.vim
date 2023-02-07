@@ -33,11 +33,11 @@ filetype indent off
 
 " Hotkeys
 :set timeoutlen=10000
-noremap <silent> <C-w>L :vertical resize -5<CR>
-noremap <silent> <C-w>H :vertical resize +5<CR>
+noremap <silent> <C-w>L :resize -5<CR>
+noremap <silent> <C-w>H :resize +5<CR>
 noremap <silent> <C-w>J :vertical resize -5<CR>
 noremap <silent> <C-w>K :vertical resize +5<CR>
-noremap <silent> <C-w><Bar> :vsplit<CR>
+noremap <silent> <C-w>_ :vsplit<CR>
 noremap <silent> <C-w>- :split<CR>
 noremap <silent> <C-w>x :q<CR>
 
