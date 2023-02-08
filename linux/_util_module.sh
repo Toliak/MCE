@@ -17,6 +17,34 @@ function formatPrintTheModuleNotInstalled() {
   printf '\e[34m%s\e[0m is \e[31mnot installed\e[0m\n' "$SUBJECT"
 }
 
+# @param $1 Line to check
+# @param $2 The file path
+# @return Status. 0 if the line exists, 1 otherwise.
+function isLineInFile() {
+  local LINE="$1"
+  local FILE="$2"
+
+  if grep -Fxq "$LINE" "$FILE"; then
+    return 0
+  fi
+
+  return 1
+}
+
+# @param $1 String to check
+# @param $2 The file path
+# @return Status. 0 if the line exists, 1 otherwise.
+function isStringInFile() {
+  local LINE="$1"
+  local FILE="$2"
+
+  if grep -Fq "$LINE" "$FILE"; then
+    return 0
+  fi
+
+  return 1
+}
+
 # @param $1 Line to add into the file
 # @param $2 The file path
 # @param $3 (Optional) Line description,
@@ -28,7 +56,7 @@ function checkAppendTheModuleLineIntoFile() {
   local LINE="$1"
   local FILE="$2"
 
-  if grep -Fxq "$LINE" "$FILE"; then
+  if isLineInFile "$LINE" "$FILE"; then
       if [ -z ${3+x} ]; then
         printf 'Line \e[34m%s\e[0m (in file \e[1;4;34m%s\e[0m) \e[1;33malready set\e[0m\n' \
           "$LINE" "$FILE"

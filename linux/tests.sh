@@ -51,7 +51,6 @@ function mockJetbrainsEnv() {
 
 function checkAllConfigs() {
   local PATHS=(
-    "$HOME/.vim_runtime"
   )
   local STATUS="0"
   local I_PATH
@@ -68,6 +67,14 @@ function checkAllConfigs() {
 function checkUserConfigs() {
   local PATHS=(
     "$HOME/.zshrc"
+    "$HOME/.bashrc"
+    "$HOME/.vim_runtime/vimrcs"
+    "$HOME/.vim_runtime/my_configs.vim"
+    "$HOME/.tmux.conf"
+    "$HOME/.tmux.conf.local"
+    "$HOME/.oh-my-zsh/custom/zsh-syntax-highlighting"
+    "$HOME/.oh-my-zsh/custom/themes/powerlevel10k"
+    "$HOME/.oh-my-zsh/templates/zshrc.zsh-template"
   )
   local STATUS="0"
   local I_PATH
@@ -77,6 +84,16 @@ function checkUserConfigs() {
       printf "checkUserConfigs: Path \e[1;4;34m%s\e[0m not found\n" "$I_PATH" >&2
     fi
   done
+
+  if ! isStringInFile "Bash fixes" "$HOME/.vim_runtime/my_configs.vim"; then
+    printf "checkUserConfigs: Line not found 1\n"
+  fi
+  if ! isStringInFile "source /root/.oh-my-zsh" "$HOME/.zshrc"; then
+    printf "checkUserConfigs: Line not found 2\n"
+  fi
+  if ! isStringInFile "source /project/linux/module" "$HOME/.bashrc"; then
+    printf "checkUserConfigs: Line not found 3\n"
+  fi
 
   return "$STATUS"
 }
@@ -115,8 +132,6 @@ function main() {
     fi
   done
 }
-
-# TODO: print executed script logs
 
 welcome >&2
 main 3>&1
