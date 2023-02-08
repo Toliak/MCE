@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  playground:
+    image: debian:buster
+    volumes: 
+    - .:/project
+    command: ['sleep', '99999999']
+
