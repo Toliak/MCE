@@ -153,32 +153,33 @@ function global:InstallModule($moduleName) {
 function global:CheckAllModulesBeforeAll($moduleNames) {
     $status = $true
     $moduleNames | ForEach-Object {
-        Write-Info "Checking module '$_'"
+        Write-Information "Checking module '$_'"
         loadModuleContext $_
 
-        if (-not checkTheModuleBeforeAll) {
+        if (-not (CheckTheModuleBeforeAll)) {
             Write-Warning "Module '$_' check beforeAll failed"
             $status = $false
         }
 
         clearModuleContext
     }
+
     return $status
 }
 
 # @return [string] Shortcuts string
-function getModuleShortcutsString() {
+function global:GetModuleShortcutsString() {
     return "qwertyuiopasdfghjklzxcvbnm1234567890"
 }
 
 # @return [string] Separator string
-function getSeparatorString() {
+function global:GetSeparatorString() {
     return "\_____________________________________________________________________________\"
 }
 
 # @param [string] $strToReduce String to reduce
 # @return [string] Reduced string
-function reduceStringToSingleChar($strToReduce) {
+function global:ReduceStringToSingleChar($strToReduce) {
     $result = ""
     $strToReduce | ForEach-Object {
         if (-not ($result -contains $_)) {
