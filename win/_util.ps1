@@ -2,6 +2,7 @@
 $ScriptDir = $PSScriptRoot
 $ProjectDir = $ScriptDir
 $ProjectRootDir = Split-Path -Parent $ScriptDir
+$SharedDataDir = "$ProjectRootDir\shared_data"
 $ModulesDir = "$ProjectDir\module"
 
 # ----------
@@ -12,15 +13,15 @@ $ModulesDir = "$ProjectDir\module"
 # @return [string[]] Array of module names
 function global:GetAllModules()
 {
-    $files = Get-ChildItem -Exclude ".*" -Directory -Path $ModulesDir
-    return $files | ForEach-Object { $_.Name }
+    $Files = Get-ChildItem -Exclude ".*" -Directory -Path $ModulesDir
+    return $Files | ForEach-Object { $_.Name }
 }
 
-# @param [string] $moduleName The module name
+# @param [string] $ModuleName The module name
 # @return [string] Path to the module
-function global:GetModulePath($moduleName)
+function global:GetModulePath($ModuleName)
 {
-    return "$ModulesDir\$moduleName"
+    return "$ModulesDir\$ModuleName"
 }
 
 # @return [string[]] Array of required function names
@@ -43,63 +44,63 @@ function global:ClearModuleContext() {
     }
 }
 
-# @param [string] $moduleName The module name
-function global:LoadModuleContext($moduleName) {
-    $modulePath = GetModulePath $moduleName
+# @param [string] $ModuleName The module name
+function global:LoadModuleContext($ModuleName) {
+    $ModulePath = GetModulePath $ModuleName
 
-    $installFile = "$modulePath\install.ps1"
-    $checkFile = "$modulePath\check.ps1"
-    $infoFile = "$modulePath\info.ps1"
+    $InstallFile = "$ModulePath\install.ps1"
+    $CheckFile = "$ModulePath\check.ps1"
+    $InfoFile = "$ModulePath\info.ps1"
 
     ClearModuleContext
-    . $installFile
-    . $checkFile
-    . $infoFile
+    . $InstallFile
+    . $CheckFile
+    . $InfoFile
 }
 
-# @param [string] $moduleName The module name
-function global:CheckModule($moduleName) {
-    $success = $true
+# @param [string] $ModuleName The module name
+function global:CheckModule($ModuleName) {
+    $Success = $true
 
-    $modulePath = GetModulePath $moduleName
-    if (-not (Test-Path $modulePath)) {
-        Write-Warning "Module '$moduleName' not found"
-        $success = $false
+    $ModulePath = GetModulePath $ModuleName
+    if (-not (Test-Path $ModulePath)) {
+        Write-Warning "Module '$ModuleName' not found"
+        $Success = $false
     }
-    if ($success -eq $false) {
-        throw "Check '$moduleName' failed"
-    }
-
-    $installFile = "$modulePath\install.ps1"
-    if (-not (Test-Path $installFile)) {
-        Write-Warning "Module '$moduleName' does not have an install.ps1 file"
-        $success = $false
-    }
-    $checkFile = "$modulePath\check.ps1"
-    if (-not (Test-Path $checkFile)) {
-        Write-Warning "Module '$moduleName' does not have a check.ps1 file"
-        $success = $false
-    }
-    $infoFile = "$modulePath\info.ps1"
-    if (-not (Test-Path $infoFile)) {
-        Write-Warning "Module '$moduleName' does not have an info.ps1 file"
-        $success = $false
-    }
-    if ($success -eq $false) {
-        throw "Check '$moduleName' failed"
+    if ($Success -eq $false) {
+        throw "Check '$ModuleName' failed"
     }
 
-    LoadModuleContext $moduleName
+    $InstallFile = "$ModulePath\install.ps1"
+    if (-not (Test-Path $InstallFile)) {
+        Write-Warning "Module '$ModuleName' does not have an install.ps1 file"
+        $Success = $false
+    }
+    $CheckFile = "$ModulePath\check.ps1"
+    if (-not (Test-Path $CheckFile)) {
+        Write-Warning "Module '$ModuleName' does not have a check.ps1 file"
+        $Success = $false
+    }
+    $InfoFile = "$ModulePath\info.ps1"
+    if (-not (Test-Path $InfoFile)) {
+        Write-Warning "Module '$ModuleName' does not have an info.ps1 file"
+        $Success = $false
+    }
+    if ($Success -eq $false) {
+        throw "Check '$ModuleName' failed"
+    }
+
+    LoadModuleContext $ModuleName
 
     GetModuleRequiredFunctions | ForEach-Object {
         if (-not (Test-Path Function:$_)) {
-            Write-Warning "Module '$moduleName' does not have function '$_'"
-            $success = $false
+            Write-Warning "Module '$ModuleName' does not have function '$_'"
+            $Success = $false
         }
     }
-    if ($success -eq $false) {
+    if ($Success -eq $false) {
         ClearModuleContext
-        throw "Check '$moduleName' failed"
+        throw "Check '$ModuleName' failed"
     }
 }
 
@@ -114,27 +115,27 @@ function global:CheckCommand($command) {
     return $true
 }
 
-function global:InstallModule($moduleName) {
-    $success = $true
-    $modulePath = GetModulePath $moduleName
-    LoadModuleContext $moduleName
+function global:InstallModule($ModuleName) {
+    $Success = $true
+    $ModulePath = GetModulePath $ModuleName
+    LoadModuleContext $ModuleName
 
-    Write-Information "Installing module '$moduleName'"
+    Write-Information "Installing module '$ModuleName'"
     Write-Information "Checking required commands"
 
     GetTheModuleRequiredCommands | ForEach-Object {
         if (-not (CheckCommand $_))
         {
-            $success = $false
+            $Success = $false
         }
     }
-    if ($success -eq $false) {
-        throw "Check '$moduleName' failed"
+    if ($Success -eq $false) {
+        throw "Check '$ModuleName' failed"
     }
 
     Write-Information "Performing before check..."
     if (-not (CheckTheModuleBefore)) {
-        throw "Module '$moduleName' failed before check"
+        throw "Module '$ModuleName' failed before check"
     }
 
     Write-Information "Performing installation..."
@@ -142,29 +143,29 @@ function global:InstallModule($moduleName) {
 
     Write-Information "Performing after check..."
     if (-not (CheckTheModuleAfter)) {
-        throw "Module '$moduleName' failed after check"
+        throw "Module '$ModuleName' failed after check"
     }
 
-    Write-Information "Module '$moduleName' installed"
+    Write-Information "Module '$ModuleName' installed"
 }
 
-# @param [string[]] $moduleNames Module names to check
+# @param [string[]] $ModuleNames Module names to check
 # @return [bool] True, if all check passed. False, otherwise
-function global:CheckAllModulesBeforeAll($moduleNames) {
-    $status = $true
-    $moduleNames | ForEach-Object {
+function global:CheckAllModulesBeforeAll($ModuleNames) {
+    $Status = $true
+    $ModuleNames | ForEach-Object {
         Write-Information "Checking module '$_'"
         loadModuleContext $_
 
         if (-not (CheckTheModuleBeforeAll)) {
             Write-Warning "Module '$_' check beforeAll failed"
-            $status = $false
+            $Status = $false
         }
 
         clearModuleContext
     }
 
-    return $status
+    return $Status
 }
 
 # @return [string] Shortcuts string
@@ -177,15 +178,149 @@ function global:GetSeparatorString() {
     return "\_____________________________________________________________________________\"
 }
 
-# @param [string] $strToReduce String to reduce
+# @param [string] $StrToReduce String to reduce
 # @return [string] Reduced string
-function global:ReduceStringToSingleChar($strToReduce) {
-    $result = ""
-    $strToReduce | ForEach-Object {
-        if (-not ($result -contains $_)) {
-            $result = "$result$_"
+function global:ReduceStringToSingleChar($StrToReduce) {
+    $Result = ""
+    $StrToReduce | ForEach-Object {
+        if (-not ($Result -contains $_)) {
+            $Result = "$Result$_"
         }
     }
-    return $result
+    return $Result
 }
 
+#
+#
+#   ----- Util Module functions -----
+#
+#
+
+function global:AddLineIfNotExists($FilePath, $LineToAdd, $LineDescription) {
+    $File = Get-ChildItem -Path "$FilePath"
+    $Result = $File | Select-String -SimpleMatch "$LineToAdd"
+    if ($Result.Length -ne 0) {
+        Write-Warning "$LineDescription line already exists in (file $FilePath)"
+        return
+    }
+
+    Add-Content $PROFILE "$LineToAdd"
+}
+
+# @param [string] $Dir Directory path
+# @return [boolean] Is VSCode config dir
+function global:IsVSCodeConfigDir($Dir) {
+    if (-not (Test-Path $Dir)) {
+        return $false
+    }
+
+    if ((Get-ChildItem -File "$Dir").Length -le 2) {
+        return $false
+    }
+    if ((Get-ChildItem -Directory "$Dir").Length -le 2) {
+        return $false
+    }
+
+    return $true
+}
+
+# @return [string[]] Detected VSCode directories
+function global:DetectVsCodeDirectories() {
+    $DirsToCheck = @(
+        "$env:APPDATA\VSCode"
+        "$env:APPDATA\Code"
+        "$env:APPDATA\Code-OSS"
+    )
+
+    return $DirsToCheck | Where-Object {
+        if (IsVSCodeConfigDir $_) {
+            Write-Information "Directory '$_' is VSCode config directory"
+            return $true
+        }
+
+        Write-Information "Directory '$_' is not VSCode config directory"
+        return $false
+    }
+}
+
+# @param [string] $Dir Directory path
+# @return [boolean] Is Jetbrains dir
+function global:IsJetbrainsDir($Dir) {
+    if (-not (Test-Path $Dir)) {
+        return $false
+    }
+
+    if ((Get-ChildItem -File "$Dir").Length -le 2) {
+        return $false
+    }
+    if ((Get-ChildItem -Directory "$Dir").Length -le 2) {
+        return $false
+    }
+
+    return $true
+}
+
+# @param [string] $Dir Directory path
+# @return [boolean] Is Jetbrains config dir
+function global:IsJetbrainsConfigDir($Dir) {
+    if (-not (Test-Path $Dir)) {
+        return $false
+    }
+
+    if ((Get-ChildItem -File "$Dir").Length -le 1) {
+        return $false
+    }
+
+    return $true
+}
+
+# @return [string[]] Detected JetBrains directories
+function global:DetectJetbrainsConfigDirectories() {
+    $DirsToCheck = @(
+        "$env:APPDATA\JetBrains"
+    )
+
+    return $DirsToCheck | Where-Object {
+        if (IsJetbrainsConfigDir $_) {
+            Write-Information "Directory '$_' is Jetbrains config directory"
+            return $true
+        }
+
+        Write-Information "Directory '$_' is not Jetbrains config directory"
+        return $false
+    }
+}
+
+# @param [string] $Dir Directory path
+# @return [boolean] Is Jetbrains IDE Config dir
+function global:IsJetbrainsIdeConfigDir($Dir) {
+    if (-not (Test-Path $Dir)) {
+        return $false
+    }
+
+    if ((Get-ChildItem -File "$Dir").Length -le 2) {
+        return $false
+    }
+    if ((Get-ChildItem -Directory "$Dir").Length -le 1) {
+        return $false
+    }
+
+    return $true
+}
+
+# @return [string[]] Detected JetBrains IDE Config directories
+function global:DetectJetbrainsIdeConfigDirectories($ConfigPath) {
+    $DirsToCheck = Get-ChildItem -Directory $ConfigPath | ForEach-Object {
+        "$ConfigPath\$_"
+    }
+
+    return $DirsToCheck | Where-Object {
+        if (IsJetbrainsIdeConfigDir $_) {
+            Write-Information "Directory '$_' is Jetbrains Ide Config directory"
+            return $true
+        }
+
+        Write-Information "Directory '$_' is not Jetbrains Ide Config directory"
+        return $false
+    }
+}

@@ -10,61 +10,61 @@ function MceLogVariables() {
 }
 
 function MceMain() {
-    $modules = @(GetAllModules)
+    $Modules = @(GetAllModules)
     Write-Information "Module directories:"
-    $modules | ForEach-Object { Write-Information " - $_" }
+    $Modules | ForEach-Object { Write-Information " - $_" }
     Write-Information ""
 
-    $keychars = GetModuleShortcutsString
+    $Keychars = GetModuleShortcutsString
 
     Write-Information "Module list:"
-    for ($i = 0; $i -lt $modules.Length; $i++) {
-        $moduleKey = $modules[$i]
-        $key = $keychars[$i]
+    for ($I = 0; $I -lt $Modules.Length; $I++) {
+        $ModuleKey = $Modules[$I]
+        $Key = $Keychars[$I]
 
         ClearModuleContext
-        LoadModuleContext $moduleKey
-        $moduleName = GetTheModuleName
-        $moduleDescription = GetTheModuleDescription
-        Write-Information "[$key] $moduleKey -- $moduleName"
-        Write-Information "$moduleDescription"
+        LoadModuleContext $ModuleKey
+        $ModuleName = GetTheModuleName
+        $ModuleDescription = GetTheModuleDescription
+        Write-Information "[$Key] $ModuleKey -- $ModuleName"
+        Write-Information "$ModuleDescription"
         Write-Information ""
     }
     ClearModuleContext
     Write-Information ""
 
-    $keys = Read-Host "Enter script letters (square brackets) to install (without spaces)"
-    $keys = ReduceStringToSingleChar $keys
+    $Keys = Read-Host "Enter script letters (square brackets) to install (without spaces)"
+    $Keys = ReduceStringToSingleChar $Keys
 
-    $toInstall = $keys.ToCharArray() | Where-Object {
-        if ($keychars.IndexOf($_) -eq -1) {
+    $ToInstall = $Keys.ToCharArray() | Where-Object {
+        if ($Keychars.IndexOf($_) -eq -1) {
             Write-Warning "Key [$_] is invalid"
             return $false
         }
-        if ($keychars.IndexOf($_) -ge $modules.Length) {
-            Write-Warning "Module for key [$_] is not available"
+        if ($Keychars.IndexOf($_) -ge $Modules.Length) {
+            Write-Warning "Module for Key [$_] is not available"
             return $false
         }
 
         return $true
     } | ForEach-Object {
-        $index = $keychars.IndexOf($_)
-        return $modules[$index]
+        $Index = $Keychars.IndexOf($_)
+        return $Modules[$Index]
     }
 
     Write-Information "Modules will be installed:"
-    $toInstall | ForEach-Object {
+    $ToInstall | ForEach-Object {
         ClearModuleContext
-        LoadModuleContext $moduleKey
-        $moduleName = GetTheModuleName
-        $key = $keychars[$modules.IndexOf($moduleKey)]
-        Write-Information "[$key] $moduleKey -- $moduleName"
+        LoadModuleContext $ModuleKey
+        $ModuleName = GetTheModuleName
+        $Key = $Keychars[$Modules.IndexOf($ModuleKey)]
+        Write-Information "[$Key] $ModuleKey -- $ModuleName"
     }
     ClearModuleContext
     Write-Information ""
     
-    Write-Information "Checking all modules before the installation..."
-    if (-not (CheckAllModulesBeforeAll $toInstall)) {
+    Write-Information "Checking all Modules before the installation..."
+    if (-not (CheckAllModulesBeforeAll $ToInstall)) {
         Write-Error "CheckAllModulesBeforeAll failed. Aborting the installation..."
         return
     }
@@ -75,29 +75,29 @@ function MceMain() {
     Write-Information (GetSeparatorString)
     Write-Information ""
 
-    $toInstall = $toInstall | Where-Object {
-        $moduleKey = $_
+    $ToInstall = $ToInstall | Where-Object {
+        $ModuleKey = $_
         try
         {
-            CheckModule $moduleKey
+            CheckModule $ModuleKey
         }
         catch
         {
-            Write-Warning "Module '$moduleKey' check failed"
+            Write-Warning "Module '$ModuleKey' check failed"
             Write-Warning "Caught exception: $_"
             return $false
         }
         return $true
     }
 
-    $toInstall | ForEach-Object {
+    $ToInstall | ForEach-Object {
         try
         {
             InstallModule $_
         }
         catch
         {
-            Write-Warning "Module '$moduleKey' installation failed"
+            Write-Warning "Module '$ModuleKey' installation failed"
             Write-Warning "Caught exception: $_"
         }
 
