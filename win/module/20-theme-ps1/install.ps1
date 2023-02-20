@@ -1,7 +1,10 @@
 $global:PSProfileDir = Split-Path -Path $PROFILE
 
 function global:InitOhMyPosh() {
-  New-Item -Path $PROFILE -Type File -ErrorAction Ignore
+  if (-not (Test-Path $PROFILE)) {
+    Write-Information "Profile file not foundm creating a new one ($PROFILE)"
+    New-Item -Path $PROFILE -Type File -Force
+  }
 
   AddLineIfNotExists `
     $PROFILE `
@@ -20,9 +23,10 @@ function global:InstallTheModule() {
   InstallOhMyPosh
   Write-Information "Oh My Posh has been installed"
 
+  InitOhMyPosh
+
   $DataDir = "$PSScriptRoot\data"
   Copy-Item "$DataDir\*.json" "$PSProfileDir"
 
-  InitOhMyPosh
   Write-Information "Oh My Posh has been configured. Restart the terminal"
 }

@@ -55,10 +55,10 @@ function MceMain() {
     Write-Information "Modules will be installed:"
     $ToInstall | ForEach-Object {
         ClearModuleContext
-        LoadModuleContext $ModuleKey
+        LoadModuleContext $_
         $ModuleName = GetTheModuleName
-        $Key = $Keychars[$Modules.IndexOf($ModuleKey)]
-        Write-Information "[$Key] $ModuleKey -- $ModuleName"
+        $Key = $Keychars[$Modules.IndexOf($_)]
+        Write-Information "[$Key] $_ -- $ModuleName"
     }
     ClearModuleContext
     Write-Information ""
