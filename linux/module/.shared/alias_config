@@ -44,6 +44,8 @@ alias totalusage='df -hl --total | grep total'
 alias gitadog='git log --all --decorate --oneline --graph'
 alias search='grep -rn . -ie'
 
+alias sudo='sudo '
+
 function search-all() {
     find . -exec grep -rn {} -ie $@ \;
 }
