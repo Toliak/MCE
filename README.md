@@ -7,18 +7,22 @@
 Using CURL:
 
 ```bash
-curl -sSf https://github.com/Toliak/MakeLinuxEasier/blob/master/install.sh | sh
+curl -sSf https://raw.githubusercontent.com/Toliak/mce/master/install.sh | bash
 ```
 
 Using WGET:
 
 ```bash
-TODO
+wget -qO- https://raw.githubusercontent.com/Toliak/mce/develop/install.sh | bash
 ```
 
 ## Windows
 
-TODO
+```
+$MCEPATH=(Join-Path -Path $Env:LOCALAPPDATA -ChildPath Programs\MakeConfigEasier)
+git clone https://github.com/toliak/mce $MCEPATH
+.(Join-Path -Path $MCEPATH -ChildPath .\win\start.ps1)
+```
 
 # Dependency graph
 
