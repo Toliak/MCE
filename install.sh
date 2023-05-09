@@ -56,4 +56,4 @@ else
   cloneAndInstall
 fi
 
-bash "$INSTALL_PATH/linux/start.sh"
+exec bash "$INSTALL_PATH/linux/start.sh" </dev/tty
