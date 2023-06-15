@@ -29,21 +29,21 @@ function getAllModules() {
   done
   shopt -u nullglob
 
-  printf "%s" "${ARRAY[*]}"
+  echo -n ${ARRAY[@]+"${ARRAY[@]}"}
 }
 
 # @param $1 Module name
 # @stdout Module absolute path
 function getModulePath() {
   local NAME="$1"
-  printf "%s" "$MODULES_DIR/$NAME"
+  echo -n "$MODULES_DIR/$NAME"
 }
 
 # @param $1 Module name
 # @stdout Module data directory path
 function getModuleDataPath() {
   local NAME="$1"
-  printf "%s" "$MODULES_DIR/$NAME/data"
+  echo -n "$MODULES_DIR/$NAME/data"
 }
 
 # @stdout Array of function names
@@ -58,7 +58,7 @@ function getModuleRequiredFunctions() {
     "installTheModule"
   )
 
-  printf "%s" "${FUNCTIONS[*]}"
+  echo -n ${FUNCTIONS[@]+"${FUNCTIONS[@]}"}
 }
 
 function clearModuleContext() {
@@ -138,8 +138,9 @@ function checkModule() {
   # shellcheck source=linux/module/.template/install.sh
   source "$INFO_FILE"
 
+  local REQUIRED_FUNS=($(getModuleRequiredFunctions))
   local FUN
-  for FUN in $(getModuleRequiredFunctions); do
+  for FUN in ${REQUIRED_FUNS[@]+"${REQUIRED_FUNS[@]}"}; do
     if [ "$(type -t "$FUN")" == "function" ]; then
       continue
     fi
@@ -171,7 +172,7 @@ function installModule() {
   COMMANDS=($(getTheModuleRequiredCommands))
   local RESULT="0"
   local CMD
-  for CMD in ${COMMANDS[*]}; do
+  for CMD in ${COMMANDS[@]+"${COMMANDS[@]}"}; do
     if ! checkCommand "$CMD"; then
       RESULT="1"
     fi
@@ -204,11 +205,11 @@ function installModule() {
 # @stderr Error messages
 # @stdout Log messages
 function checkAllModulesBeforeAll() {
-  local MODULE_NAMES="$1"
+  local MODULE_NAMES=($1)
 
   local RESULT="0"
   local MODULE
-  for MODULE in ${MODULE_NAMES[*]}; do
+  for MODULE in ${MODULE_NAMES[@]+"${MODULE_NAMES[@]}"}; do
     loadModuleContext "$MODULE"
 
     set +e
@@ -264,7 +265,7 @@ function isUserRoot() {
 function sudolifyCommand() {
   local CMD="$1"
   if isUserRoot; then
-    printf "%s" "$CMD"
+    echo -n "$CMD"
     return
   fi
 
@@ -275,9 +276,9 @@ function sudolifyCommand() {
 # @stdout Formatted array
 function printFormatArray() {
   local ARRAY
-  ARRAY="$1"
+  ARRAY=($1)
   local ITEM
-  for ITEM in ${ARRAY[*]}; do
+  for ITEM in ${ARRAY[@]+"${ARRAY[@]}"}; do
     printf "%s \e[1;34m%s\e[0m\n" "-" "$ITEM"
   done
 }
@@ -318,12 +319,12 @@ function firstStringContainsCharIndex() {
   for (( I=0; I<"$STRING_LENGTH"; I++ )); do
     local SUBSTR="${SEARCH_IN:$I:1}"
     if [ "$SUBSTR" = "$SEARCH_FOR" ]; then
-      printf "%s" "$I"
+      echo -n "$I"
       return 0
     fi
   done
 
-  printf "%s" "$STRING_LENGTH"
+  echo -n "$STRING_LENGTH"
 #  return 1
 }
 
@@ -342,7 +343,7 @@ function reduceStringToSingleChar() {
     fi
   done
 
-  printf "%s" "$RESULT"
+  echo -n "$RESULT"
 }
 
 # @stdout Detect OS

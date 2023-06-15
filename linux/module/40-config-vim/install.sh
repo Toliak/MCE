@@ -2,7 +2,7 @@
 
 # @stdout Vim Runtime path
 function getTheModuleVimRuntime() {
-  printf "%s" "$HOME/.vim_runtime"
+  echo -n "$HOME/.vim_runtime"
   return
 }
 

@@ -2,7 +2,7 @@
 
 # @stdout Zshrc file path
 function getTheModuleBashrc() {
-  printf "%s" "$HOME/.bashrc"
+  echo -n "$HOME/.bashrc"
 }
 
 # Installation

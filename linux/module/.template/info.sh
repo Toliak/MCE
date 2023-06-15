@@ -8,7 +8,7 @@ function getTheModuleName() {
 # @stdout Array of required commands
 function getTheModuleRequiredCommands() {
   ARRAY=(git bash)
-  printf "%s" "${ARRAY[*]}"
+  echo -n ${ARRAY[@]+"${ARRAY[@]}"}
 }
 
 # @stdout Module description

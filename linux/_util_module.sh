@@ -138,7 +138,7 @@ function detectVSCodeConfigDir() {
     FOUND+=("$DIR")
   done
 
-  printf "%s" "${FOUND[*]}"
+  echo -n "${FOUND[*]}"
 }
 
 # @param $1 Directory to check
@@ -180,7 +180,7 @@ function detectJetbrainsDir() {
 
     printf "Directory \e[1;4;34m%s\e[0m is a JetBrains directory\n" \
       "$DIR" >&2
-    printf "%s" "$DIR"
+    echo -n "$DIR"
     return 0
   done
 
@@ -228,7 +228,7 @@ function detectJetbrainsIdeDirs() {
         "$LOCAL_DIR" >&2
     fi
   done
-  printf "%s" "${FOUND[*]}"
+  echo -n "${FOUND[*]}"
 }
 
 # @param $1 Directory to check
@@ -262,7 +262,7 @@ function detectJetbrainsConfigDir() {
 
     printf "Directory \e[1;4;34m%s\e[0m is a JetBrains Config directory\n" \
       "$DIR" >&2
-    printf "%s" "$DIR"
+    echo -n "$DIR"
     return 0
   done
 
@@ -310,5 +310,5 @@ function detectJetbrainsIdeConfigDirs() {
         "$LOCAL_DIR" >&2
     fi
   done
-  printf "%s" "${FOUND[*]}"
+  echo -n "${FOUND[*]}"
 }

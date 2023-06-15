@@ -65,7 +65,7 @@ function _installTheModulePackages() {
     return 1
   fi
 
-  printf "%s" "${APPS[*]}"
+  echo -n "${APPS[*]}"
 }
 
 # Installation
