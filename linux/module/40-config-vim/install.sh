@@ -19,5 +19,8 @@ function installTheModule() {
 
   cp "$MODULE_DATA_DIR/my_configs.vim" "$VIM_RUNTIME/my_configs.vim"
   printf '\e[34mUltimate Vim additional config\e[0m \e[32minstalled\e[0m\n'
+
+  patch "$VIM_RUNTIME/vimrcs/basic.vim" < "$MODULE_DATA_DIR/basic.vim.patch"
+  printf '\e[34mUltimate Vim\e[0m \e[32mapplied basic.vim patch\e[0m\n'
   return 0
 }

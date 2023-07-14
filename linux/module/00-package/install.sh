@@ -54,6 +54,7 @@ function _installTheModulePackages() {
     "vim"
     "curl"
     "xclip"
+    "patch"
   )
   if [ "$OS" = "debian" ]; then
     APPS+=()

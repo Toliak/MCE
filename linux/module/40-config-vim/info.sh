@@ -7,7 +7,7 @@ function getTheModuleName() {
 
 # @stdout Array of required commands
 function getTheModuleRequiredCommands() {
-  ARRAY=(git vim)
+  ARRAY=(git vim patch)
   echo -n ${ARRAY[@]+"${ARRAY[@]}"}
 }
 
