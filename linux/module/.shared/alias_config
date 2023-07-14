@@ -46,6 +46,9 @@ alias search='grep -rn . -ie'
 
 alias sudo='sudo '
 
+alias to-xsel="xsel -i -b"
+alias to-xclip="xclip -i -selection clipboard"
+
 function search-all() {
     find . -exec grep -rn {} -ie $@ \;
 }
@@ -136,5 +139,5 @@ function sus() {
     printf '        ⠈⠛⠻⠿⠿⠿⠿⠋⠁              \n'
     printf '\e[0m\n'
 
-    sudo su
+    sudo su $@
 }
