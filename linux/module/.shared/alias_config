@@ -118,26 +118,30 @@ function sus() {
     COLOR=$((30 + $RANDOM % 6))
 
     printf "\e[${COLOR}m"
-    printf '           ⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀        \n'
-    printf '        ⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀     \n'
-    printf '        ⣼⣿⠋        ⢀⣀⣀⠈⢻⣿⣿⡄    \n'
-    printf '       ⣸⣿⡏     ⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄   \n'
-    printf '       ⣿⣿⠁   ⢰⣿⣿⣯⠁        ⠈⠙⢿⣷⡄ \n'
-    printf '  ⣀⣤⣴⣶⣶⣿⡟    ⢸⣿⣿⣿⣆           ⣿⣷ \n'
-    printf ' ⢰⣿⡟⠋⠉⣹⣿⡇    ⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿ \n'
-    printf ' ⢸⣿⡇  ⣿⣿⡇      ⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃ \n'
-    printf ' ⣸⣿⡇  ⣿⣿⡇       ⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇  \n'
-    printf ' ⣿⣿⠁  ⣿⣿⡇                  ⢸⣿⣧  \n'
-    printf ' ⣿⣿   ⣿⣿⡇                  ⢸⣿⣿  \n'
-    printf " ⣿⣿   ⣿⣿⡇   \e[01;31mAre you root?\e[00;${COLOR}m  ⢸⣿⣿  \n"
-    printf ' ⢿⣿⡆  ⣿⣿⡇                   ⢸⣿⡇  \n'
-    printf ' ⠸⣿⣧⡀ ⣿⣿⡇                   ⣿⣿⠃  \n'
-    printf '  ⠛⢿⣿⣿⣿⣿⣇     ⣰⣿⣿⣷⣶⣶⣶⣶⠶    ⢠⣿⣿   \n'
-    printf '        ⣿⣿      ⣿⣿⡇ ⣽⣿⡏⠁    ⢸⣿⡇   \n'
-    printf '        ⣿⣿      ⣿⣿⡇ ⢹⣿⡆     ⣸⣿⠇   \n'
-    printf '        ⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁   ⠈⠻⣿⣿⣿⣿⡿⠏    \n'
-    printf '        ⠈⠛⠻⠿⠿⠿⠿⠋⠁              \n'
+    printf "             sWWWWWWWWWWWWWWss            \n"
+    printf "         sWWWWWWsssssssssssWWWWWWWs       \n"
+    printf "        WWss                 sWWWWss      \n"
+    printf "       sWs       ssWWWWWWWWWWWWWWWWWss    \n"
+    printf "       sWs      sWWWs             sWWWs   \n"
+    printf "  sWWWWWWWs     sWWWs              sWWWs  \n"
+    printf " sWWsssWWWWs    sWWWs              sWWWs  \n"
+    printf " sWW    WWs      sWWWssssssssssssssWWWs   \n"
+    printf " sWW    WWs       sWWWWWWWWWWWWWWWWWWs    \n"
+    printf " sWW    WWs                       sWW     \n"
+    printf " sWW    WWs                       sWs     \n"
+    printf " sWW    WWs     \e[01;31mAre you root?\e[00;${COLOR}m     sWs   \n"
+    printf " sWW    WWs                       sWs     \n"
+    printf " sWW    WWs       ssWWWWWss       sWs     \n"
+    printf "  sssWWWWWs      sWWWWsWWWWs      sWW     \n"
+    printf "        WWs      WWs     sWW      sWW     \n"
+    printf "        WWs      WWs     sWW      sWW     \n"
+    printf "        sWWWsssWWWss     ssWWWsssWWWs     \n"
+    printf "         ssWWWWWsss       sssWWWWWss      \n"
     printf '\e[0m\n'
 
     sudo su $@
+}
+
+function MakeConfigEasierVersion() {
+    cat "$MAKE_CONFIG_EASIER_PATH/VERSION"
 }
