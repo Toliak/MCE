@@ -19,6 +19,8 @@ function global:InstallTheModule() {
   Copy-Item "$DataDir\*.ps1" "$PSProfileDir"
   Write-Information "Copied MCE configuration files"
 
+  # TODO(toliak): Create original path, without config copy
+
   InitConfigsPs1
   Write-Information "Add MCE configuration files into the PROFILE"
 }

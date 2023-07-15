@@ -69,7 +69,47 @@ function New-AmongusTerminal() {
     New-AdminTerminal
 }
 
+function gitadog() { git log --all --oneline --graph --decorate }
+
+function ssr() { ssh -l root $args }
+
+function ..() {  Set-Location ".."}
+function ...() {  Set-Location "../.."}
+function ....() {  Set-Location "../../.."}
+function .....() {  Set-Location "../../../.."}
+function ......() {  Set-Location "../../../../.."}
+
+function cdp() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Path
+    )
+
+    $RealLocation = Get-Item $Path | Select-Object -ExpandProperty Target
+    if ($null -eq $RealLocation) {
+        Set-Location $Path
+    } else {
+        Set-Location $RealLocation
+    }
+}
+
+function mkdircd() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Path
+    )
+
+    New-Item -Type Directory -Path $Path
+    Set-Location $Path
+}
+
 Set-Alias -Name c -Value Clear-Host
+Set-Alias -Name cl -Value Clear-Host
+Set-Alias -Name ckear -Value Clear-Host
+Set-Alias -Name clr -Value Clear-Host
+
 Set-Alias -Name ll -Value Get-ChildItem
 Set-Alias -Name ln -Value New-SymLink
 Set-Alias -Name sus -Value New-AmongusTerminal
