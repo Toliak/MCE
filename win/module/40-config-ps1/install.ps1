@@ -3,6 +3,8 @@ $global:PSProfileDir = Split-Path -Path $PROFILE
 function global:InitConfigsPs1() {
   New-Item -Path $PROFILE -Type File -ErrorAction Ignore
 
+  AddLineIfNotExists $PROFILE "`$MAKE_CONFIG_EASIER_PATH = `"$ProjectRootDir`"" "Add `$MAKE_CONFIG_EASIER_PATH variable"
+
   Split-Path -Path "$DataDir\*.ps1" -Leaf -Resolve | ForEach-Object {
     AddLineIfNotExists $PROFILE ". $PSProfileDir\$_" "Init config '$_'"
   }
