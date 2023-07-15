@@ -23,7 +23,7 @@ function installTheModule() {
   BASHRC=$(getTheModuleBashrc)
 
   checkAppendTheModuleLineIntoFileSilent \
-    "\$MAKE_CONFIG_EASIER_PATH=\"$PROJECT_ROOT_DIR\"" \
+    "MAKE_CONFIG_EASIER_PATH=\"$PROJECT_ROOT_DIR\"" \
     "$BASHRC" \
     "Bash MAKE_CONFIG_EASIER_PATH variable"
 

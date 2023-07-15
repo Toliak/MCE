@@ -20,7 +20,7 @@ function installTheModule() {
   OS=$(detectOs)
 
   checkAppendTheModuleLineIntoFileSilent \
-    "\$MAKE_CONFIG_EASIER_PATH=\"$PROJECT_ROOT_DIR\"" \
+    "MAKE_CONFIG_EASIER_PATH=\"$PROJECT_ROOT_DIR\"" \
     "$ZSHRC" \
     "Zsh MAKE_CONFIG_EASIER_PATH variable"
 
