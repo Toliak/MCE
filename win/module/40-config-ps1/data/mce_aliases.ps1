@@ -105,11 +105,15 @@ function mkdircd() {
     Set-Location $Path
 }
 
+function ll() {
+    Get-ChildItem -Force
+}
+
 Set-Alias -Name c -Value Clear-Host
 Set-Alias -Name cl -Value Clear-Host
 Set-Alias -Name ckear -Value Clear-Host
 Set-Alias -Name clr -Value Clear-Host
 
-Set-Alias -Name ll -Value Get-ChildItem
+Set-Alias -Name l -Value ll
 Set-Alias -Name ln -Value New-SymLink
 Set-Alias -Name sus -Value New-AmongusTerminal
