@@ -268,6 +268,10 @@ function sudolifyCommand() {
     echo -n "$CMD"
     return
   fi
+  if [ "$(detectOs)" = "mac" ]; then
+    echo -n "$CMD"
+    return
+  fi
 
   printf "sudo %s" "$CMD"
 }
@@ -352,8 +356,12 @@ function reduceStringToSingleChar() {
 # - `arch`
 # - `unknown`
 function detectOs() {
-  if checkCommand "apt-get" 2&>/dev/null \
-      || checkCommand "apt" 2&>/dev/null
+  if checkCommand "brew" 2&>/dev/null
+  then
+    printf "mac"
+    return
+  fi
+  if checkCommand "apt-get" 2&>/dev/null
   then
     printf "debian"
     return
@@ -368,4 +376,18 @@ function detectOs() {
   fi
 
   printf "unknown"
+}
+
+function detectSed() {
+  if checkCommand "gsed" 2&>/dev/null
+  then
+    printf "gsed"
+    return
+  fi
+  if [ "$(detectOs)" = "mac" ]; then
+    printf "MacOS must use gsed, but it is not found. Exiting.\n"
+    return 1
+  fi
+
+  printf "sed"
 }

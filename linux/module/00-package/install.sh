@@ -14,6 +14,10 @@ function _installTheModulePackageInstall() {
     printf "pacman --noconfirm -S"
     return 0
   fi
+  if [ "$OS" = "mac" ]; then
+    printf "brew install -f -v"
+    return 0
+  fi
 
   printf "_installTheModulePackageInstall: failed, maybe internal error (OS=%s)\n" \
     "$OS" >&2
@@ -34,6 +38,10 @@ function _installTheModulePackageUpdate() {
     printf "pacman --noconfirm -Syy"
     return 0
   fi
+  if [ "$OS" = "mac" ]; then
+    printf "brew update -f"
+    return 0
+  fi
 
   printf "_installTheModulePackageInstall: failed, maybe internal error (OS=%s)\n" \
     "$OS" >&2
@@ -48,6 +56,8 @@ function _installTheModulePackages() {
 
   local APPS=(
     "git"
+  )
+  local APPS_LINUX=(
     "zsh"
     "powerline"
     "tmux"
@@ -57,9 +67,18 @@ function _installTheModulePackages() {
     "patch"
   )
   if [ "$OS" = "debian" ]; then
-    APPS+=()
+    APPS=("${APPS[@]}" "${APPS_LINUX[@]}")
   elif [ "$OS" = "arch" ]; then
-    APPS+=()
+    APPS=("${APPS[@]}" "${APPS_LINUX[@]}")
+  elif [ "$OS" = "mac" ]; then
+    APPS=(
+      "${APPS[@]}" 
+      gnu-sed
+      vim
+      tmux
+      curl
+      coreutils
+    )
   else
     printf "_installTheModulePackageInstall: failed, maybe internal error (OS=%s)\n" \
       "$OS" >&2
