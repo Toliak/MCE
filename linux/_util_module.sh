@@ -122,6 +122,8 @@ function detectVSCodeConfigDir() {
     "$HOME/.config/code"
     "$HOME/.config/code-oss"
     "$HOME/.config/Code-OSS"
+    "$HOME/.config/Code OSS"
+    "$HOME/Library/Application Support/Code"
   )
 
   local FOUND=()

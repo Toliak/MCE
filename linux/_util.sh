@@ -11,6 +11,9 @@ GLOBAL_SHARED_DATA_DIR="$PROJECT_ROOT_DIR/shared_data"
 
 source "$SCRIPT_DIR/_util_module.sh"
 
+IPS="
+"
+
 # ----------
 # Modules
 # ----------
