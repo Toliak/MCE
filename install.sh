@@ -56,4 +56,9 @@ else
   cloneAndInstall
 fi
 
+if [ "$(uname)" = "Darwin" ]; then
+  printf "MacOS detected\n"
+  exec bash "$INSTALL_PATH/mac/start.sh" </dev/tty
+fi
+
 exec bash "$INSTALL_PATH/linux/start.sh" </dev/tty

@@ -359,16 +359,19 @@ function reduceStringToSingleChar() {
 # - `arch`
 # - `unknown`
 function detectOs() {
-  if checkCommand "brew" 2&>/dev/null
+  if checkCommand "brew" 2&>/dev/null \
+      || [ "$(uname)" == "Darwin" ]
   then
     printf "mac"
     return
   fi
+
   if checkCommand "apt-get" 2&>/dev/null
   then
     printf "debian"
     return
   fi
+
   if checkCommand "pacman" 2&>/dev/null \
       || checkCommand "pamac" 2&>/dev/null \
       || checkCommand "yaourt" 2&>/dev/null \

@@ -19,7 +19,7 @@ function macPrerequirements() {
     fi
     if ! checkCommand "realpath" 2&>/dev/null; then
         printf "Coreutils not found. Installing...\n"
-        brew install -v -f coreutils
+        brew install -v -f coreutils git
     else
         printf "Coreutils found. ok\n"
     fi
