@@ -1,0 +1,3 @@
+alias ports='sudo lsof -i -P | grep LISTEN'
+alias ls="ls"
+alias ip="ip"

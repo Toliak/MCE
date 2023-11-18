@@ -8,6 +8,9 @@ function getTheModuleName() {
 # @stdout Array of required commands
 function getTheModuleRequiredCommands() {
   ARRAY=(git sed tmux)
+  if [ "$(detectOs)" = "mac" ]; then
+    ARRAY+=(gsed)
+  fi
   echo -n ${ARRAY[@]+"${ARRAY[@]}"}
 }
 

@@ -9,6 +9,10 @@ function getTheModuleName() {
 function getTheModuleRequiredCommands() {
   ARRAY=(git sed zsh)
   echo -n ${ARRAY[@]+"${ARRAY[@]}"}
+
+  if [ "$(detectOs)" = "mac" ]; then
+    echo -n " gsed"
+  fi
 }
 
 # @stdout Module description

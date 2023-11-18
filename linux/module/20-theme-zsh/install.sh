@@ -35,7 +35,7 @@ function _installTheModulePowerlevel() {
   fi
 
   git clone "$POWERLEVEL_10K_URL" "$POWERLEVEL_10K_PATH" --depth 1
-  sed -i 's/ZSH_THEME="[^"]\+"/ZSH_THEME="powerlevel10k\/powerlevel10k"/g' "$HOME/.zshrc"
+  $(detectSed) -i 's/ZSH_THEME="[^"]\+"/ZSH_THEME="powerlevel10k\/powerlevel10k"/g' "$HOME/.zshrc"
   printf '\e[34mPowerLevel 10k\e[0m is \e[32minstalled\e[0m\n'
 }
 
