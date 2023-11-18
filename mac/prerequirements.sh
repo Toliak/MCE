@@ -3,9 +3,7 @@
 set -eu
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-PROJECT_ROOT_DIR=$(realpath "$SCRIPT_DIR/..")
-PROJECT_DIR=$(realpath "$PROJECT_ROOT_DIR/mac")
-PROJECT_LINUX_DIR=$(realpath "$PROJECT_ROOT_DIR/linux")
+PROJECT_ROOT_DIR="$SCRIPT_DIR/.."
 
 source "$PROJECT_LINUX_DIR/_util.sh"
 
@@ -23,6 +21,10 @@ function macPrerequirements() {
     else
         printf "Coreutils found. ok\n"
     fi
+
+    PROJECT_ROOT_DIR=$(realpath "$SCRIPT_DIR/..")
+    PROJECT_DIR=$(realpath "$PROJECT_ROOT_DIR/mac")
+    PROJECT_LINUX_DIR=$(realpath "$PROJECT_ROOT_DIR/linux")
 
     return 0;
 }
