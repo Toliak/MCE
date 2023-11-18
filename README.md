@@ -1,8 +1,17 @@
-# Make Configuration Easier
+**Make Configuration Easier**
+
+# Prerequirements
+
+MacOS, Linux:
+- git
+- curl / wget
+
+Windows:
+- git
 
 # Installation
 
-## Linux
+## Linux / MacOS
 
 Using CURL:
 
