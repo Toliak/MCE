@@ -46,8 +46,44 @@ alias search='grep -rn . -ie'
 
 alias sudo='sudo '
 
-alias to-xsel="xsel -i -b"
-alias to-xclip="xclip -i -selection clipboard"
+function rtrim() {
+    local TEXT
+    TEXT=$(</dev/stdin)
+    echo -n $TEXT
+}
+
+function to-xsel() {
+    local ARG
+    ARG="$1"
+
+    if [ "$ARG" = "-nt" ]; then
+        # No trim
+        xsel -i -b
+    else
+        # Trim
+        rtrim | xsel -i -b
+    fi
+}
+
+function to-xclip() {
+    local ARG
+    ARG="$1"
+
+    if [ "$ARG" = "-nt" ]; then
+        # No trim
+        xclip -i -selection clipboard
+    else
+        # Trim
+        rtrim | xclip -i -selection clipboard
+    fi
+}
+
+alias private-vim="vim -i /tmp/private-viminfo --cmd 'set noswapfile' --cmd 'set nobackup'"
+alias private-zsh="HISTFILE=/tmp/private-zsh-histfile zsh"
+alias private-chromium="chromium --incognito --user-data-dir=/tmp/private-chromium"
+
+alias virsh-sys="virsh --connect qemu:///system"
+alias diff-text="diff --color=always --text --recursive"
 
 function search-all() {
     find . -exec grep -rn {} -ie $@ \;
