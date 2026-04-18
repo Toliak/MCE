@@ -1,5 +1,8 @@
 **Make Configuration Easier**
 
+> [!WARNING]
+> This project has been superseded by [MCE2](https://github.com/Toliak/MCE2). This repository is no longer maintained.
+
 # Prerequirements
 
 MacOS, Linux:
